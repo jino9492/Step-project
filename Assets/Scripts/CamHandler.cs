@@ -6,7 +6,7 @@ public class CamHandler : MonoBehaviour
 {
     public Transform camTransform;
     public Transform playerTransform;
-    public Vector3 camOffset;
+    private Vector3 camOffset;
 
     private void Start()
     {

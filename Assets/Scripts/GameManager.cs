@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject Fog;
+
+    private void Start()
     {
-        Debug.Log("Test");
+        Fog.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.F)) // F를 눌러 불 좀 켜줄래?
+            Fog.SetActive(!Fog.activeSelf);
     }
 }
