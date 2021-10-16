@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class Flashlight : MonoBehaviour
 {
-    public GameObject Enemy;
-
     public Player player;
     public Transform flashlightSprite;
     public Quaternion flashlightDeltaAngle;
-    
+
+    public bool isEnemyDead;
 
     public float timer = 0; // 괴물이 시야 안에 들어와 있는 시간
 
-    void Update()
+    private void Start()
     {
+        
+    }
+
+    private void Update()
+    {
+
         if (player.moveInput.x == 0 || player.moveInput.y == 0) // 대각선 이동이 아닐 경우에만
         {
             if (player.moveInput.y < 0)
@@ -25,10 +30,9 @@ public class Flashlight : MonoBehaviour
                 flashlightDeltaAngle = Quaternion.Euler(0, 0, 180); // 위쪽
             else if (player.moveInput.x < 0)
                 flashlightDeltaAngle = Quaternion.Euler(0, 0, 270); // 오른쪽
-
         }
     }
-    public void FixedUpdate()
+    private void FixedUpdate()
     {
 
         flashlightSprite.rotation = Quaternion.Lerp(flashlightSprite.rotation, flashlightDeltaAngle, 0.4f);
@@ -43,7 +47,7 @@ public class Flashlight : MonoBehaviour
 
             if (timer > 0.5)
             {
-                Destroy(Enemy);
+                isEnemyDead = true;
                 timer = 0;
             }
         }
