@@ -23,17 +23,14 @@ public class Follower : MonoBehaviour
 	/// <param name="path">Path.</param>
 	public void Follow ( Path path )
 	{
-		StopMoving();
-		StopCoroutine( "FollowPath" );
-		m_Path = path;
-		StartCoroutine ( "FollowPath" );
-	}
-
-	public void StopMoving()
-    {
 		#if UNITY_EDITOR
 		UnityEditor.EditorApplication.update -= Update;
 		#endif
+		StopCoroutine( "FollowPath" );
+		m_Path = path;
+		Debug.Log(path);
+		//transform.position = m_Path.nodes[0].transform.position;
+		StartCoroutine ( "FollowPath" );
 	}
 
 	/// <summary>

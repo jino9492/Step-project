@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     {
         flash = GameObject.Find("Flashlight").GetComponent<Flashlight>();
         player = GameObject.Find("Player").GetComponent<Transform>();
+        follower = this.GetComponent<Follower>();
 
         for (int i = 0; i < nodes.allNodes.Length; i++)
             spawnPoints[i] = nodes.allNodes[i].transform.position;
@@ -53,13 +54,16 @@ public class Enemy : MonoBehaviour
 
     public void RespawnEnemy() // 리스폰
     {
-        follower.StopMoving();
         nodes.allNodes[nodes.minIndex].connections.Remove(nodes.thisNode);
-        GameObject newObj = Instantiate(enemyPrefab, spawnPoints[Random.Range(0, spawnPoints.Length)], Quaternion.identity);
-        newObj.transform.parent = graph.gameObject.transform;
-        newObj.GetComponent<Enemy>().isRespawned = true;
 
-        Destroy(this.gameObject);
+        Vector2 spawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+        transform.position = spawn;
+        isRespawned = true;
+
+        Path path = graph.GetShortestPath(nodes.thisNode, nodes.thisNode);
+        follower.Follow(path);
+
         flash.isEnemyDead = false;
     }
 
