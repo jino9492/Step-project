@@ -5,6 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public TalkManager talkManager;
+
     public float moveSpeed;
     public Vector2 moveInput;
 
@@ -13,6 +15,10 @@ public class Player : MonoBehaviour
     public NodesInfo nodes;
     #endregion
 
+    private void Start()
+    {
+        talkManager = FindObjectOfType<TalkManager>();
+    }
 
     private void Update()
     {
@@ -22,13 +28,15 @@ public class Player : MonoBehaviour
 
         //상호작용
         Vector2 direction = new Vector2(moveInput.x, moveInput.y);
-        Debug.DrawRay(transform.position, direction * 1.5f, Color.green);
-        RaycastHit2D interObject = Physics2D.Raycast(transform.position, direction * 3);
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 1.5f, Color.green);
+        RaycastHit2D interObject = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y, -10), direction * 1.5f);
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (interObject.collider != null)
+            Debug.Log(interObject.collider.name);
+            if (interObject.collider != null && interObject.collider.tag == "Obstacle")
             {
-                Debug.Log(interObject.collider.name);
+                
+                talkManager.Talking(interObject.collider.gameObject);
             }
         }
 
@@ -40,7 +48,9 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
-
+        if (!talkManager.showPanel) //판넬있을때 움직 ㄴㄴ
+        {
+            rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+        }
     }
 }

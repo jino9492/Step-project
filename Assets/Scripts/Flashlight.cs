@@ -5,6 +5,7 @@ using UnityEngine;
 public class Flashlight : MonoBehaviour
 {
     public Player player;
+    public TalkManager talkManager;
     public Transform flashlightSprite;
     public Quaternion flashlightDeltaAngle;
 
@@ -14,7 +15,7 @@ public class Flashlight : MonoBehaviour
 
     private void Start()
     {
-        
+        talkManager = FindObjectOfType<TalkManager>();
     }
 
     private void Update()
@@ -34,9 +35,10 @@ public class Flashlight : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
-        flashlightSprite.rotation = Quaternion.Lerp(flashlightSprite.rotation, flashlightDeltaAngle, 0.4f);
-
+        if (!talkManager.showPanel) //판넬있을때 움직 ㄴㄴ
+        {
+            flashlightSprite.rotation = Quaternion.Lerp(flashlightSprite.rotation, flashlightDeltaAngle, 0.4f);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
