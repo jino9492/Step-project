@@ -12,7 +12,7 @@ public class Follower : MonoBehaviour
 	[SerializeField]
 	protected Graph m_Graph;
 	[SerializeField]
-	protected float m_Speed = 0.01f;
+	public float m_Speed = 0.01f;
 	protected Path m_Path = new Path ();
 	protected Node m_Current;
 
@@ -28,7 +28,6 @@ public class Follower : MonoBehaviour
 		#endif
 		StopCoroutine( "FollowPath" );
 		m_Path = path;
-		Debug.Log(path);
 		//transform.position = m_Path.nodes[0].transform.position;
 		StartCoroutine ( "FollowPath" );
 	}
@@ -47,8 +46,6 @@ public class Follower : MonoBehaviour
 		{
 			m_Current = e.Current;
 
-			if (Random.Range(0, 3) == 0)
-				yield return new WaitForSeconds(4);
 			// Wait until we reach the current target node and then go to next node
 			yield return new WaitUntil(() =>
 			{
