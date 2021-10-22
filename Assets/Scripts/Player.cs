@@ -20,6 +20,18 @@ public class Player : MonoBehaviour
         moveInput.y = Input.GetAxisRaw("Vertical");
         moveInput = moveInput.normalized;
 
+        //상호작용
+        Vector2 direction = new Vector2(moveInput.x, moveInput.y);
+        Debug.DrawRay(transform.position, direction * 1.5f, Color.green);
+        RaycastHit2D interObject = Physics2D.Raycast(transform.position, direction * 3);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (interObject.collider != null)
+            {
+                Debug.Log(interObject.collider.name);
+            }
+        }
+
         if (nodes.isNodeChanged)
             nodes.isNodeChanged = false;
 
