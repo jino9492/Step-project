@@ -24,7 +24,7 @@ public class Follower : MonoBehaviour
 	public void Follow ( Path path )
 	{
 		#if UNITY_EDITOR
-		UnityEditor.EditorApplication.update -= Update;
+		UnityEditor.EditorApplication.update -= FixedUpdate;
 		#endif
 		StopCoroutine( "FollowPath" );
 		m_Path = path;
@@ -40,7 +40,7 @@ public class Follower : MonoBehaviour
 	IEnumerator FollowPath ()
 	{
 		#if UNITY_EDITOR
-		UnityEditor.EditorApplication.update += Update;
+		UnityEditor.EditorApplication.update += FixedUpdate;
 		#endif
 		var e = m_Path.nodes.GetEnumerator ();
 		while ( e.MoveNext () )
@@ -61,7 +61,7 @@ public class Follower : MonoBehaviour
 		
 	}
 
-	void Update ()
+	void FixedUpdate ()
 	{
 		if ( m_Current != null )
 		{

@@ -9,8 +9,11 @@ public class Enemy : MonoBehaviour
     public Transform player;
     public GameObject enemyPrefab;
     public Vector2[] spawnPoints;
+    public float respawnPointMinDistance;
     public bool isRespawned;
+    public bool isPlayerFounded;
 
+    [Header("PathFinding")]
     #region PathFinding
     public Graph graph;
     public Node targetNode;
@@ -18,6 +21,11 @@ public class Enemy : MonoBehaviour
     public GraphController gc;
     public NodesInfo nodes;
     #endregion
+
+    [Header("PlayerChasing")]
+    public LayerMask layerMask;
+    public float chaseSpeed;
+    public float recognitionRange;
 
     private void Start()
     {
@@ -37,7 +45,7 @@ public class Enemy : MonoBehaviour
 
         gc.FindShortestNode(ref nodes.allNodes, ref nodes.thisNode, ref nodes.minIndex, ref nodes.isNodeChanged); // 가장 가까운 노드 찾아 설정
 
-        if (nodes.isNodeChanged)
+        if (nodes.isNodeChanged && !isPlayerFounded)
         {
             if (isRespawned)
                 StartCoroutine("DelayPathFinding");
@@ -49,6 +57,9 @@ public class Enemy : MonoBehaviour
         {
             RespawnEnemy();
         }
+
+        ChasePlayer();
+        
     }
 
 
@@ -58,12 +69,16 @@ public class Enemy : MonoBehaviour
 
         Vector2 spawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
+        while (Vector2.Distance(spawn, player.position) < respawnPointMinDistance)
+            spawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        
         transform.position = spawn;
-        isRespawned = true;
 
         Path path = graph.GetShortestPath(nodes.thisNode, nodes.thisNode);
         follower.Follow(path);
 
+        isRespawned = true;
+        isPlayerFounded = true;
         flash.isEnemyDead = false;
     }
 
@@ -72,6 +87,18 @@ public class Enemy : MonoBehaviour
         Path path = graph.GetShortestPath(nodes.thisNode, targetNode);
         follower.Follow(path);
         nodes.isNodeChanged = false;
+    }
+
+    public void ChasePlayer()
+    {
+        bool playerInSight = !Physics2D.Raycast(transform.position, (transform.position - player.position).normalized, layerMask);
+        bool playerInRecognitionRange = Vector2.Distance(transform.position, player.transform.position) < recognitionRange;
+
+        if (playerInSight && playerInRecognitionRange)
+        {
+            graph.GetShortestPath(nodes.thisNode, nodes.thisNode);
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, chaseSpeed);
+        }
     }
 
     IEnumerator DelayPathFinding()
