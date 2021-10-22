@@ -11,6 +11,7 @@ public class Flashlight : MonoBehaviour
     public bool isEnemyDead;
 
     public float timer = 0; // 괴물이 시야 안에 들어와 있는 시간
+    public float enemySurvivalTime; 
 
     private void Start()
     {
@@ -45,7 +46,7 @@ public class Flashlight : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (timer > 0.5)
+            if (timer > enemySurvivalTime)
             {
                 isEnemyDead = true;
                 timer = 0;

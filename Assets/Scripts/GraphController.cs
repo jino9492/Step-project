@@ -20,8 +20,6 @@ public class GraphController : MonoBehaviour
                 thisNode.connections[0] = allNodes[minIndex];
             }
         }
-
-        Debug.Log(minIndex);
     }
 }
 
