@@ -145,17 +145,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 318f40e85940dee4fb6e1a3d20538ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8154240304823933852, guid: a68e61d3baad2914c904f669110a9334, type: 3}
+  player: {fileID: 0}
   enemyPrefab: {fileID: 4976097375195387155}
   spawnPoints:
   - {x: 0, y: 3}
   - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  respawnPointMinDistance: 25
+  isRespawned: 0
+  isPlayerFounded: 0
   graph: {fileID: 0}
   targetNode: {fileID: 0}
   follower: {fileID: 3590883979676586809}
   gc: {fileID: 0}
   nodes:
-    thisNode: {fileID: 0}
+    thisNode: {fileID: 4531456511173948399}
     allNodes:
     - {fileID: 0}
     - {fileID: 0}
@@ -168,6 +178,9 @@ MonoBehaviour:
     - {fileID: 0}
     minIndex: 0
     isNodeChanged: 1
+  chasingSpeed: 0.05
+  recognitionRange: 25
+  originalSpeed: 0
 --- !u!114 &3590883979676586809
 MonoBehaviour:
   m_ObjectHideFlags: 0
