@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     public Vector2 moveInput;
 
+    public Vector2 lastDirection;
+    public LayerMask layerMask;
+
     #region PathFinding
     public GraphController gc;
     public NodesInfo nodes;
@@ -28,9 +31,13 @@ public class Player : MonoBehaviour
 
         //상호작용
         Vector2 direction = new Vector2(moveInput.x, moveInput.y);
+        if (direction != Vector2.zero)
+        {
+            lastDirection = direction;
+        }
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 1.5f, Color.green);
-        RaycastHit2D interObject = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y, -10), direction * 1.5f);
-        if (Input.GetKeyDown(KeyCode.Space))
+        RaycastHit2D interObject = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), lastDirection, 1.5f, layerMask);
+        if (Input.GetKeyDown(KeyCode.Space) && interObject.collider)
         {
             Debug.Log(interObject.collider.name);
             if (interObject.collider != null && interObject.collider.tag == "Obstacle")
