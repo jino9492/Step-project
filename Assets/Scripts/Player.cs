@@ -25,16 +25,20 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
-        moveInput = moveInput.normalized;
+        if (!talkManager.showPanel) //대화창있을때 움직 ㄴㄴ
+        {
+            moveInput.x = Input.GetAxisRaw("Horizontal");
+            moveInput.y = Input.GetAxisRaw("Vertical");
+            moveInput = moveInput.normalized;
+        }
 
-        //상호작용
         Vector2 direction = new Vector2(moveInput.x, moveInput.y);
         if (direction != Vector2.zero)
         {
             lastDirection = direction;
         }
+
+        //상호작용 (space)
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 1.5f, Color.green);
         RaycastHit2D interObject = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), lastDirection, 1.5f, layerMask);
         if (Input.GetKeyDown(KeyCode.Space) && interObject.collider)
@@ -55,9 +59,6 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!talkManager.showPanel) //판넬있을때 움직 ㄴㄴ
-        {
-            rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
-        }
+        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
     }
 }

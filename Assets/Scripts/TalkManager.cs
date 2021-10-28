@@ -7,13 +7,20 @@ using TMPro;
 public class TalkManager : MonoBehaviour
 {
     public Player player;
+    public ObjectId objectIdScript;
+    public Animator anim;
+    public TalkTextManager talkTextManager;
+
     public TextMeshProUGUI talkingText;
     public bool showPanel = false;
-    public Animator anim;
+
+    public int objectId;
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();    
+        player = FindObjectOfType<Player>();
+        objectIdScript = FindObjectOfType<ObjectId>();
+        talkTextManager = FindObjectOfType<TalkTextManager>();
     }
 
     private void Update()
@@ -23,7 +30,10 @@ public class TalkManager : MonoBehaviour
 
     public void Talking(GameObject scanObject)
     {
-        talkingText.text = scanObject.name + "오브젝트";
+        objectId = scanObject.GetComponent<ObjectId>().objectId;
+
+        talkingText.text = talkTextManager.GetText(objectId);
+
         if(showPanel != true)
         {
             showPanel = true;
