@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8154240304823933852}
   - component: {fileID: 8154240304823933849}
   - component: {fileID: 8154240304823933848}
+  - component: {fileID: 8095415370928222688}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -119,8 +120,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8154240304823933852}
+  talkManager: {fileID: 0}
+  gm: {fileID: 0}
   moveSpeed: 10
   moveInput: {x: 0, y: 0}
+  lastDirection: {x: 0, y: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  gc: {fileID: 0}
+  nodes:
+    thisNode: {fileID: 0}
+    allNodes: []
+    minIndex: 0
+    isNodeChanged: 0
 --- !u!61 &8154240304823933848
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132,6 +145,32 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.17, y: 4.17}
+    newSize: {x: 4.17, y: 4.17}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.17, y: 4.17}
+  m_EdgeRadius: 0
+--- !u!61 &8095415370928222688
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8154240304823933853}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -311,7 +350,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 8154240304823933849}
+  talkManager: {fileID: 0}
   flashlightSprite: {fileID: 8154240305442003521}
   flashlightDeltaAngle: {x: 0, y: 0, z: 0, w: 0}
   isEnemyDead: 0
   timer: 0
+  enemySurvivalTime: 0

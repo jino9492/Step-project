@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
     public TalkManager talkManager;
+    public GameManager gm;
 
     public float moveSpeed;
     public Vector2 moveInput;
@@ -21,6 +22,12 @@ public class Player : MonoBehaviour
     private void Start()
     {
         talkManager = FindObjectOfType<TalkManager>();
+        gm = FindObjectOfType<GameManager>();
+
+        GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
+        nodes.allNodes = new Node[nodeObj.Length];
+        for (int i = 0; i < nodeObj.Length; i++)
+            nodes.allNodes[i] = nodeObj[i].GetComponent<Node>();
     }
 
     private void Update()
@@ -60,5 +67,13 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            gm.GameOver();
+        }
     }
 }

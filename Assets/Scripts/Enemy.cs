@@ -36,12 +36,19 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        flash = GameObject.Find("Flashlight").GetComponent<Flashlight>();
-        player = GameObject.Find("Player").GetComponent<Transform>();
+        flash = FindObjectOfType<Flashlight>();
+        player = FindObjectOfType<Player>().GetComponent<Transform>();
         follower = this.GetComponent<Follower>();
 
-        for (int i = 0; i < nodes.allNodes.Length; i++)
-            spawnPoints[i] = nodes.allNodes[i].transform.position;
+        GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
+        nodes.allNodes = new Node[nodeObj.Length];
+        spawnPoints = new Vector2[nodeObj.Length];
+        for (int i = 0; i < nodeObj.Length; i++)
+        {
+            nodes.allNodes[i] = nodeObj[i].GetComponent<Node>();
+            spawnPoints[i] = nodeObj[i].GetComponent<Node>().transform.position;
+        }
+            
 
         originalSpeed = follower.m_Speed;
     }
@@ -74,10 +81,16 @@ public class Enemy : MonoBehaviour
     {
         nodes.allNodes[nodes.minIndex].connections.Remove(nodes.thisNode); // 노드끼리의 연결 초기화
 
-        Vector2 spawn = spawnPoints[Random.Range(0, spawnPoints.Length)]; // 스폰 장소 설정
+        Vector2 spawn = Vector2.zero;
+        for (int i = 0; i < nodes.allNodes.Length; i++)
+        {
+            spawn = spawnPoints[Random.Range(0, spawnPoints.Length)]; // 리스폰 장소 설정
+            if (Vector2.Distance(spawn, player.position) > respawnPointMinDistance) // 리스폰 거리 조건을 만족시킬 경우
+                break;
+        }
 
-        while (Vector2.Distance(spawn, player.position) < respawnPointMinDistance)
-            spawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        if (spawn == Vector2.zero) // 개발자 옵션 : 리스폰 거리 조건을 만족시키는 리스폰 포인트를 못찾을 경우
+            Debug.Log("Can not find appropriate spawn point");
 
         transform.position = spawn;
 
