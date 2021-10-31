@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     [Header("General")]
     public Transform player;
     public GameObject enemyPrefab;
+    public GameManager gm;
     public Vector2[] spawnPoints;
     public float respawnPointMinDistance;
     public bool isRespawned;
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour
         flash = FindObjectOfType<Flashlight>();
         player = FindObjectOfType<Player>().GetComponent<Transform>();
         follower = this.GetComponent<Follower>();
+        gm = FindObjectOfType<GameManager>();
 
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
         nodes.allNodes = new Node[nodeObj.Length];
@@ -135,5 +137,13 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(2);
         RePathFinding();
         isRespawned = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            gm.GameOver();
+        }
     }
 }

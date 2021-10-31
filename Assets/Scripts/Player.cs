@@ -68,12 +68,4 @@ public class Player : MonoBehaviour
     {
         rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            gm.GameOver();
-        }
-    }
 }
