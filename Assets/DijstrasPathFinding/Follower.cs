@@ -23,9 +23,8 @@ public class Follower : MonoBehaviour
 	/// <param name="path">Path.</param>
 	public void Follow ( Path path )
 	{
-		#if UNITY_EDITOR
-		UnityEditor.EditorApplication.update -= FixedUpdate;
-		#endif
+		StopFixedUpdate();
+
 		StopCoroutine( "FollowPath" );
 		m_Path = path;
 		//transform.position = m_Path.nodes[0].transform.position;
@@ -36,11 +35,10 @@ public class Follower : MonoBehaviour
 	/// Following the path.
 	/// </summary>
 	/// <returns>The path.</returns>
-	IEnumerator FollowPath ()
+	IEnumerator FollowPath()
 	{
-		#if UNITY_EDITOR
-		UnityEditor.EditorApplication.update += FixedUpdate;
-		#endif
+		StartFixedUpdate();
+
 		var e = m_Path.nodes.GetEnumerator ();
 		while ( e.MoveNext () )
 		{
@@ -54,8 +52,25 @@ public class Follower : MonoBehaviour
 
 			
 		}
+
+		StopFixedUpdate();
+
 		m_Current = null;
 		
+	}
+
+	public void StartFixedUpdate()
+    {
+		#if UNITY_EDITOR
+		UnityEditor.EditorApplication.update += FixedUpdate;
+		#endif
+	}
+
+	public void StopFixedUpdate()
+    {
+		#if UNITY_EDITOR
+		UnityEditor.EditorApplication.update -= FixedUpdate;
+		#endif
 	}
 
 	void FixedUpdate ()

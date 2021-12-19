@@ -7,6 +7,11 @@ public class Enemy : MonoBehaviour
 {
     private Flashlight flash;
     private float distToPlayer;
+    private AudioSource audio;
+    public AudioClip walkingSound;
+    public AudioClip runningSound;
+
+    float animTimer = 0;
 
     #region General
     [Header("General")]
@@ -41,6 +46,7 @@ public class Enemy : MonoBehaviour
         player = FindObjectOfType<Player>().GetComponent<Transform>();
         follower = this.GetComponent<Follower>();
         gm = FindObjectOfType<GameManager>();
+        audio = FindObjectOfType<Enemy>().GetComponent<AudioSource>();
 
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
         nodes.allNodes = new Node[nodeObj.Length];
@@ -50,26 +56,39 @@ public class Enemy : MonoBehaviour
             nodes.allNodes[i] = nodeObj[i].GetComponent<Node>();
             spawnPoints[i] = nodeObj[i].GetComponent<Node>().transform.position;
         }
-            
 
-        originalSpeed = follower.m_Speed;
+        audio.clip = walkingSound;
     }
 
     
     private void Update()
     {
+        Vector2 distVector = player.transform.position - transform.position;
+        float angle = Mathf.Atan2(distVector.y, distVector.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+
         distToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
         gc.FindShortestNode(ref nodes.allNodes, ref nodes.thisNode, ref nodes.minIndex, ref nodes.isNodeChanged); // 가장 가까운 노드 찾아 설정
+        CheckPlayerInSight();
 
-        ChasePlayer();
+        animTimer += Time.deltaTime;
 
-        if (nodes.isNodeChanged)
+        if (animTimer > 0.3)
         {
-            if (isRespawned || Random.Range(0, 3) == 0) // 리스폰 후, 혹은 랜덤으로 2초간 멈칫
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            animTimer = 0;
+        }
+
+        if (nodes.isNodeChanged && !isPlayerFounded)
+        {
+            Debug.Log(nodes.isNodeChanged);
+            if (isRespawned || Random.Range(0, 2) == 0) // 리스폰 후, 혹은 랜덤으로 2초간 멈칫
                 StartCoroutine("DelayPathFinding");
             else
                 RePathFinding();
+
+            nodes.isNodeChanged = false;
         }
 
         if (flash.isEnemyDead) 
@@ -78,6 +97,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (isPlayerFounded)
+        {
+            ChasePlayer();
+        }
+    }
 
     public void RespawnEnemy() // 리스폰
     {
@@ -96,24 +122,28 @@ public class Enemy : MonoBehaviour
 
         transform.position = spawn;
 
-        Path path = graph.GetShortestPath(nodes.thisNode, nodes.thisNode); // PathFinding 초기화
-        follower.Follow(path);
-
-        follower.m_Speed = originalSpeed; // 속도 초기화 (발견 및 추격 속도 -> 일반 속도)
+        ResetPathFinding();
 
         isRespawned = true;
         isPlayerFounded = false;
         flash.isEnemyDead = false;
+
+        audio.clip = walkingSound;
     }
 
     public void RePathFinding() // AI : 길 찾기
     {
         Path path = graph.GetShortestPath(nodes.thisNode, targetNode);
         follower.Follow(path);
-        nodes.isNodeChanged = false;
     }
 
-    public void ChasePlayer()
+    public void ResetPathFinding()
+    {
+        Path path = graph.GetShortestPath(nodes.thisNode, nodes.thisNode); // PathFinding 초기화
+        follower.Follow(path);
+    }
+
+    public void CheckPlayerInSight()
     {
         Vector2 dir = (player.transform.position - transform.position).normalized;
         bool playerInSight = Physics2D.Raycast(transform.position, dir, distToPlayer, 1 << LayerMask.NameToLayer("Obstacle")).collider == null ? true : false; // 플레이어가 벽에 가려지지 않았는가
@@ -121,20 +151,32 @@ public class Enemy : MonoBehaviour
 
         Debug.DrawRay(transform.position, (player.transform.position - transform.position).normalized * recognitionRange, Color.red);
 
-        if (playerInSight && playerInRecognitionRange)
+        if (playerInSight && playerInRecognitionRange && !isPlayerFounded)
         {
-            StopCoroutine("DelayPathFinding");
-            follower.m_Speed = chasingSpeed;
             isPlayerFounded = true;
+
+            audio.Stop();
+            audio.clip = runningSound;
+            audio.Play();
 
             if (isRespawned)
                 isRespawned = false;
         }
     }
 
+    public void ChasePlayer()
+    {
+        StopCoroutine("DelayPathFinding");
+        ResetPathFinding();
+        transform.position = Vector3.MoveTowards(transform.position, player.position, chasingSpeed);
+    }
+
     IEnumerator DelayPathFinding()
     {
+        audio.Stop();
+        ResetPathFinding();
         yield return new WaitForSeconds(2);
+        audio.Play();
         RePathFinding();
         isRespawned = false;
     }
@@ -144,6 +186,12 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             gm.GameOver();
+        }
+
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            isPlayerFounded = false;
+            RePathFinding();
         }
     }
 }

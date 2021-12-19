@@ -26,8 +26,7 @@ public class GameManager : MonoBehaviour
         enemy.gameObject.SetActive(false);
         player.gameObject.SetActive(false);
 
-        if (true) // 조건 넣을 것 (조건 만족 시 게임 재개)
-            RestartGame();
+        RestartGame(); // 임시
         Debug.Log("Game Over");
     }
 

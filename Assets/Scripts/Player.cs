@@ -50,10 +50,12 @@ public class Player : MonoBehaviour
         RaycastHit2D interObject = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), lastDirection, 1.5f, layerMask);
         if (Input.GetKeyDown(KeyCode.Space) && interObject.collider)
         {
-            Debug.Log(interObject.collider.name);
-            if (interObject.collider != null && interObject.collider.tag == "Obstacle")
+            if (!interObject.collider.gameObject.GetComponent<ObjectId>())
             {
-                
+                Debug.LogError("Object ID Does Not Exist");
+            }
+            else if (interObject.collider != null && interObject.collider.tag == "Obstacle")
+            {
                 talkManager.Talking(interObject.collider.gameObject);
             }
         }
