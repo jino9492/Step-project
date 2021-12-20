@@ -16,6 +16,7 @@ public class InteractManager : MonoBehaviour
     public bool showPanel = false;
 
     public AudioClip doorOpenSFX;
+    public AudioClip doorLockSFX;
     public AudioSource audio;
 
     public bool inRoom = false;
@@ -78,6 +79,15 @@ public class InteractManager : MonoBehaviour
             }
 
             StartCoroutine("ChangeRoom", location);
+        }
+    }
+
+    public void LockedDoor()
+    {
+        if (!audio.isPlaying)
+        {
+            audio.clip = doorLockSFX;
+            audio.Play();
         }
     }
 

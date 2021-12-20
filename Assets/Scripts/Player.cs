@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
                 switch (objectData.objectId)
                 {
                     case (int)InteractManager.objectList.lockedDoor:
+                        interactManager.LockedDoor();
                         break;
 
                     case (int)InteractManager.objectList.unlockedDoor:
