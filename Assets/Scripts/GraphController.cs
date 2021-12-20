@@ -21,6 +21,24 @@ public class GraphController : MonoBehaviour
             }
         }
     }
+
+    public void FindShortestNode(ref Node[] allNodes, ref Node thisNode, ref int minIndex, ref bool isNodeChanged, bool first) //가장 가까운 노드를 찾아 설정하는 함수
+    {
+        for (int i = 0; i < allNodes.Length; i++)
+        {
+            if (Vector2.Distance(thisNode.transform.position, allNodes[minIndex].transform.position) > Vector2.Distance(thisNode.transform.position, allNodes[i].transform.position) || first)
+            {
+                isNodeChanged = true;
+                allNodes[minIndex].connections.Remove(thisNode);
+                minIndex = i;
+
+                if (!allNodes[minIndex].connections.Contains(thisNode))
+                    allNodes[minIndex].connections.Add(thisNode);
+
+                thisNode.connections[0] = allNodes[minIndex];
+            }
+        }
+    }
 }
 
 [System.Serializable]

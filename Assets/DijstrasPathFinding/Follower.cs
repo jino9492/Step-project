@@ -14,8 +14,9 @@ public class Follower : MonoBehaviour
 	[SerializeField]
 	public float m_Speed = 0.01f;
 	protected Path m_Path = new Path ();
-	protected Node m_Current;
+	public Node m_Current;
 
+	public bool isArrived = false;
 
 	/// <summary>
 	/// Follow the specified path.
@@ -24,7 +25,6 @@ public class Follower : MonoBehaviour
 	public void Follow ( Path path )
 	{
 		StopFixedUpdate();
-
 		StopCoroutine( "FollowPath" );
 		m_Path = path;
 		//transform.position = m_Path.nodes[0].transform.position;
@@ -56,7 +56,6 @@ public class Follower : MonoBehaviour
 		StopFixedUpdate();
 
 		m_Current = null;
-		
 	}
 
 	public void StartFixedUpdate()

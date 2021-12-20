@@ -84,7 +84,21 @@ public class Player : MonoBehaviour
         if (nodes.isNodeChanged)
             nodes.isNodeChanged = false;
 
-        gc.FindShortestNode(ref nodes.allNodes, ref nodes.thisNode, ref nodes.minIndex, ref nodes.isNodeChanged); // 가장 가까운 노드 찾아 설정
+        if (!interactManager.inRoom)
+        {
+            if (nodes.thisNode.connections.Count == 0)
+            {
+                nodes.thisNode.connections.Add(nodes.thisNode);
+                gc.FindShortestNode(ref nodes.allNodes, ref nodes.thisNode, ref nodes.minIndex, ref nodes.isNodeChanged, true);
+            }
+            gc.FindShortestNode(ref nodes.allNodes, ref nodes.thisNode, ref nodes.minIndex, ref nodes.isNodeChanged); // 가장 가까운 노드 찾아 설정
+        }
+        else if (nodes.thisNode.connections.Count > 0)
+        {
+            nodes.thisNode.connections[0].connections.Remove(nodes.thisNode);
+            nodes.thisNode.connections.Clear();
+        }
+            
     }
 
     private void FixedUpdate()

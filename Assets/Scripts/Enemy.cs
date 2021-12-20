@@ -6,10 +6,14 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     private Flashlight flash;
+    private InteractManager interactManager;
     private float distToPlayer;
+
+    #region Audio
     private AudioSource audio;
     public AudioClip walkingSound;
     public AudioClip runningSound;
+    #endregion
 
     float animTimer = 0;
 
@@ -42,6 +46,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        interactManager = FindObjectOfType<InteractManager>();
         flash = FindObjectOfType<Flashlight>();
         player = FindObjectOfType<Player>().GetComponent<Transform>();
         follower = this.GetComponent<Follower>();
@@ -80,13 +85,30 @@ public class Enemy : MonoBehaviour
             animTimer = 0;
         }
 
+        
         if (nodes.isNodeChanged && !isPlayerFounded)
         {
-            Debug.Log(nodes.isNodeChanged);
-            if (isRespawned || Random.Range(0, 2) == 0) // 리스폰 후, 혹은 랜덤으로 2초간 멈칫
-                StartCoroutine("DelayPathFinding");
+            Node randNode = nodes.allNodes[Random.Range(0, nodes.allNodes.Length - 1)];
+            while (nodes.thisNode.connections.Contains(randNode))
+            {
+                randNode = nodes.allNodes[Random.Range(0, nodes.allNodes.Length - 1)];
+            }
+
+            // 리스폰 후, 혹은 랜덤으로 2초간 멈칫
+            if (interactManager.inRoom)
+            {
+                if (Random.Range(0, 2) == 0)
+                    StartCoroutine("DelayPathFinding", randNode);
+                else
+                    RePathFinding(randNode);
+            }
             else
-                RePathFinding();
+            {
+                if (Random.Range(0, 2) == 0 || isRespawned)
+                    StartCoroutine("DelayPathFinding");
+                else
+                    RePathFinding();
+            }
 
             nodes.isNodeChanged = false;
         }
@@ -112,13 +134,13 @@ public class Enemy : MonoBehaviour
         Vector2 spawn = Vector2.zero;
         for (int i = 0; i < nodes.allNodes.Length; i++)
         {
-            spawn = spawnPoints[Random.Range(0, spawnPoints.Length)]; // 리스폰 장소 설정
+            spawn = spawnPoints[Random.Range(0, spawnPoints.Length - 1)]; // 리스폰 장소 설정
             if (Vector2.Distance(spawn, player.position) > respawnPointMinDistance) // 리스폰 거리 조건을 만족시킬 경우
                 break;
         }
 
         if (spawn == Vector2.zero) // 개발자 옵션 : 리스폰 거리 조건을 만족시키는 리스폰 포인트를 못찾을 경우
-            Debug.Log("Can not find appropriate spawn point");
+            Debug.LogError("Can not find appropriate spawn point");
 
         transform.position = spawn;
 
@@ -137,9 +159,16 @@ public class Enemy : MonoBehaviour
         follower.Follow(path);
     }
 
+    public void RePathFinding(Node node)
+    {
+        Path path = graph.GetShortestPath(nodes.thisNode, node);
+        follower.Follow(path);
+    }
+
     public void ResetPathFinding()
     {
         Path path = graph.GetShortestPath(nodes.thisNode, nodes.thisNode); // PathFinding 초기화
+        Debug.Log(path);
         follower.Follow(path);
     }
 
@@ -178,6 +207,16 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(2);
         audio.Play();
         RePathFinding();
+        isRespawned = false;
+    }
+
+    IEnumerator DelayPathFinding(Node node)
+    {
+        audio.Stop();
+        ResetPathFinding();
+        yield return new WaitForSeconds(2);
+        audio.Play();
+        RePathFinding(node);
         isRespawned = false;
     }
 
