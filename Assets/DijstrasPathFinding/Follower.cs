@@ -16,8 +16,6 @@ public class Follower : MonoBehaviour
 	protected Path m_Path = new Path ();
 	public Node m_Current;
 
-	public bool isArrived = false;
-
 	/// <summary>
 	/// Follow the specified path.
 	/// </summary>

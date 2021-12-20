@@ -88,15 +88,14 @@ public class Enemy : MonoBehaviour
         
         if (nodes.isNodeChanged && !isPlayerFounded)
         {
-            Node randNode = nodes.allNodes[Random.Range(0, nodes.allNodes.Length - 1)];
-            while (nodes.thisNode.connections.Contains(randNode))
-            {
-                randNode = nodes.allNodes[Random.Range(0, nodes.allNodes.Length - 1)];
-            }
-
             // 리스폰 후, 혹은 랜덤으로 2초간 멈칫
             if (interactManager.inRoom)
             {
+                Node randNode;
+                do{
+                    randNode = nodes.allNodes[Random.Range(0, nodes.allNodes.Length - 1)];
+                } while (nodes.thisNode.connections.Contains(randNode));
+
                 if (Random.Range(0, 2) == 0)
                     StartCoroutine("DelayPathFinding", randNode);
                 else
@@ -225,12 +224,6 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             gm.GameOver();
-        }
-
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            isPlayerFounded = false;
-            RePathFinding();
         }
     }
 }

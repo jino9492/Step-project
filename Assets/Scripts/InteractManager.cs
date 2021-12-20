@@ -96,7 +96,7 @@ public class InteractManager : MonoBehaviour
 
     IEnumerator ChangeRoom(Vector2 location)
     {
-        enemy.StartCoroutine("DelayPathFinding");
+        enemy.StartCoroutine("DelayPathFinding", enemy.nodes.thisNode.connections[0]);
         player.enabled = false;
 
         // 효과음 오디오 소스는 메인 카메라에 달려있음.
@@ -116,7 +116,6 @@ public class InteractManager : MonoBehaviour
 
         for (float i = 1; i >= 0; i -= Time.deltaTime * 5)
         {
-            Time.timeScale = 1;
             fadeImg.color = new Color(0, 0, 0, i);
             yield return null;
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Enemy enemy;
     public Rigidbody2D rb;
     public InteractManager interactManager;
     public GameManager gm;
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        enemy = FindObjectOfType<Enemy>();
         interactManager = FindObjectOfType<InteractManager>();
         gm = FindObjectOfType<GameManager>();
         audio = GetComponent<AudioSource>();
@@ -97,6 +99,10 @@ public class Player : MonoBehaviour
         {
             nodes.thisNode.connections[0].connections.Remove(nodes.thisNode);
             nodes.thisNode.connections.Clear();
+        }
+        else if (enemy.GetComponent<Follower>().m_Current == nodes.thisNode)
+        {
+            enemy.nodes.isNodeChanged = true;
         }
             
     }
