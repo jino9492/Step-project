@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public TalkManager talkManager;
+    public InteractManager interactManager;
     public GameManager gm;
 
     public float moveSpeed;
@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        talkManager = FindObjectOfType<TalkManager>();
+        interactManager = FindObjectOfType<InteractManager>();
         gm = FindObjectOfType<GameManager>();
 
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (!talkManager.showPanel) //대화창있을때 움직 ㄴㄴ
+        if (!interactManager.showPanel) //대화창있을때 움직 ㄴㄴ
         {
             moveInput.x = Input.GetAxisRaw("Horizontal");
             moveInput.y = Input.GetAxisRaw("Vertical");
@@ -50,13 +50,27 @@ public class Player : MonoBehaviour
         RaycastHit2D interObject = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), lastDirection, 1.5f, layerMask);
         if (Input.GetKeyDown(KeyCode.Space) && interObject.collider)
         {
-            if (!interObject.collider.gameObject.GetComponent<ObjectId>())
+            ObjectId objectData = interObject.collider.gameObject.GetComponent<ObjectId>();
+            if (!objectData)
             {
                 Debug.LogError("Object ID Does Not Exist");
             }
-            else if (interObject.collider != null && interObject.collider.tag == "Obstacle")
+            else if (interObject.collider != null && interObject.collider.tag == "InteractiveObject")
             {
-                talkManager.Talking(interObject.collider.gameObject);
+                switch (objectData.objectId)
+                {
+                    case (int)InteractManager.objectList.lockedDoor:
+                        break;
+
+                    case (int)InteractManager.objectList.unlockedDoor:
+                        interactManager.OpenDoor(interObject.collider.gameObject);
+                        break;
+
+                    case (int)InteractManager.objectList.document:
+                        interactManager.Talking(interObject.collider.gameObject);
+                        break;
+                }
+                
             }
         }
 

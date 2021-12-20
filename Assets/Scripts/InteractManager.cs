@@ -1,0 +1,115 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor.UI;
+using TMPro;
+
+public class InteractManager : MonoBehaviour
+{
+    public Player player;
+    public Enemy enemy;
+    public ObjectId objectIdScript;
+    public Animator anim;
+    public TalkTextManager talkTextManager;
+
+    public TextMeshProUGUI talkingText;
+    public bool showPanel = false;
+
+    public AudioClip doorOpenSFX;
+    public AudioSource audio;
+
+    public bool inRoom = false;
+
+    public int objectId;
+    public int objectNumber;
+
+    public enum objectList
+    {
+        lockedDoor,
+        unlockedDoor,
+        document,
+    }
+
+    public SpriteRenderer fadeImg;
+
+    private void Start()
+    {
+        player = FindObjectOfType<Player>();
+        enemy = FindObjectOfType<Enemy>();
+        objectIdScript = FindObjectOfType<ObjectId>();
+        talkTextManager = FindObjectOfType<TalkTextManager>();
+        fadeImg = GameObject.Find("FadeImage").GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        anim.SetBool("showPanel", showPanel);
+    }
+
+    public void Talking(GameObject scanObject)
+    {
+        objectId = scanObject.GetComponent<ObjectId>().objectId;
+        objectNumber = scanObject.GetComponent<ObjectId>().objectNumber;
+
+        talkingText.text = talkTextManager.GetText(objectId * 100 + objectNumber);
+        
+        showPanel = !showPanel;
+    }
+
+    public void OpenDoor(GameObject scanObject)
+    {
+        Vector2 location = scanObject.GetComponent<ObjectId>().location;
+        AudioListener audioListener = scanObject.GetComponent<AudioListener>();
+        AudioListener audioListenerPlayer = player.GetComponent<AudioListener>();
+
+        if (!enemy.isPlayerFounded)
+        {
+            inRoom = !inRoom;
+            Debug.Log(scanObject);
+            if (inRoom)
+            {
+                audioListener.enabled = true;
+                audioListenerPlayer.enabled = false;
+            }
+            else
+            {
+                audioListener.enabled = false;
+                audioListenerPlayer.enabled = true;
+            }
+
+            StartCoroutine("ChangeRoom", location);
+        }
+    }
+
+    IEnumerator ChangeRoom(Vector2 location)
+    {
+        enemy.StartCoroutine("DelayPathFinding");
+        player.enabled = false;
+
+        // 효과음 오디오 소스는 메인 카메라에 달려있음.
+        audio.clip = doorOpenSFX;
+        audio.Play();
+
+        for (float i = 0; i <= 1; i += Time.deltaTime * 5)
+        {
+            fadeImg.color = new Color(0, 0, 0, i);
+            yield return null;
+        }
+
+        fadeImg.color = new Color(0, 0, 0, 1);
+        player.transform.position = location;
+
+        yield return new WaitForSecondsRealtime(1);
+
+        for (float i = 1; i >= 0; i -= Time.deltaTime * 5)
+        {
+            Time.timeScale = 1;
+            fadeImg.color = new Color(0, 0, 0, i);
+            yield return null;
+        }
+        fadeImg.color = new Color(0, 0, 0, 0);
+
+        player.enabled = true;
+    }
+
+}   

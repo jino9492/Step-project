@@ -5,7 +5,7 @@ using UnityEngine;
 public class Flashlight : MonoBehaviour
 {
     public Player player;
-    public TalkManager talkManager;
+    public InteractManager interactManager;
     public Transform flashlightSprite;
     public Quaternion flashlightDeltaAngle;
 
@@ -16,7 +16,7 @@ public class Flashlight : MonoBehaviour
 
     private void Start()
     {
-        talkManager = FindObjectOfType<TalkManager>();
+        interactManager = FindObjectOfType<InteractManager>();
     }
 
     private void Update()
@@ -36,7 +36,7 @@ public class Flashlight : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!talkManager.showPanel) //판넬있을때 움직 ㄴㄴ
+        if (!interactManager.showPanel) //판넬있을때 움직 ㄴㄴ
         {
             flashlightSprite.rotation = Quaternion.Lerp(flashlightSprite.rotation, flashlightDeltaAngle, 0.4f);
         }

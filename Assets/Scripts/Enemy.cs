@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
 
         animTimer += Time.deltaTime;
 
-        if (animTimer > 0.3)
+        if (animTimer > 0.08)
         {
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
             animTimer = 0;
