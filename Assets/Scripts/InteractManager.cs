@@ -62,6 +62,7 @@ public class InteractManager : MonoBehaviour
         Vector2 location = scanObject.GetComponent<ObjectId>().location;
         AudioListener audioListener = scanObject.GetComponent<AudioListener>();
         AudioListener audioListenerPlayer = player.GetComponent<AudioListener>();
+        AudioLowPassFilter audioFilterEnemy = enemy.GetComponent<AudioLowPassFilter>();
 
         if (!enemy.isPlayerFounded)
         {
@@ -69,11 +70,13 @@ public class InteractManager : MonoBehaviour
             Debug.Log(scanObject);
             if (inRoom)
             {
+                audioFilterEnemy.enabled = true;
                 audioListener.enabled = true;
                 audioListenerPlayer.enabled = false;
             }
             else
             {
+                audioFilterEnemy.enabled = false;
                 audioListener.enabled = false;
                 audioListenerPlayer.enabled = true;
             }
