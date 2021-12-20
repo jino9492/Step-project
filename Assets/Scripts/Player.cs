@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     public InteractManager interactManager;
     public GameManager gm;
+    public AudioSource audio;
 
     public float moveSpeed;
     public Vector2 moveInput;
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
     {
         interactManager = FindObjectOfType<InteractManager>();
         gm = FindObjectOfType<GameManager>();
+        audio = GetComponent<AudioSource>();
 
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
         nodes.allNodes = new Node[nodeObj.Length];
@@ -43,7 +45,11 @@ public class Player : MonoBehaviour
         if (direction != Vector2.zero)
         {
             lastDirection = direction;
+            if (!audio.isPlaying)
+                audio.Play();
         }
+        else
+            audio.Stop();
 
         //상호작용 (space)
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 1.5f, Color.green);
@@ -57,7 +63,7 @@ public class Player : MonoBehaviour
             }
             else if (interObject.collider != null && interObject.collider.tag == "InteractiveObject")
             {
-                switch (objectData.objectId)
+                switch (objectData.objectId) // 오브젝트 아이디에 따른 분류
                 {
                     case (int)InteractManager.objectList.lockedDoor:
                         interactManager.LockedDoor();
