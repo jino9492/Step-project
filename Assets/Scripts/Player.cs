@@ -42,6 +42,10 @@ public class Player : MonoBehaviour
             moveInput.y = Input.GetAxisRaw("Vertical");
             moveInput = moveInput.normalized;
         }
+        else
+        {
+            moveInput = Vector2.zero;
+        }
 
         Vector2 direction = new Vector2(moveInput.x, moveInput.y);
         if (direction != Vector2.zero)
