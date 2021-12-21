@@ -14,6 +14,7 @@ public class InteractManager : MonoBehaviour
 
     public TextMeshProUGUI talkingText;
     public bool showPanel = false;
+    public int page = 0;
 
     public AudioClip doorOpenSFX;
     public AudioClip doorLockSFX;
@@ -51,10 +52,15 @@ public class InteractManager : MonoBehaviour
     {
         objectId = scanObject.GetComponent<ObjectId>().objectId;
         objectNumber = scanObject.GetComponent<ObjectId>().objectNumber;
+        string[] text = talkTextManager.GetText(objectId * 100 + objectNumber);
 
-        talkingText.text = talkTextManager.GetText(objectId * 100 + objectNumber);
-        
-        showPanel = !showPanel;
+        if (page == 0 || page == text.Length)
+            showPanel = !showPanel;
+
+        if (page < text.Length)
+            talkingText.text = talkTextManager.GetText(objectId * 100 + objectNumber)[page++];
+        else
+            page = 0;
     }
 
     public void OpenDoor(GameObject scanObject)
