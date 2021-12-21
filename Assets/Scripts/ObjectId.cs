@@ -6,6 +6,8 @@ public class ObjectId : MonoBehaviour
 {
     public int objectId;
     public int objectNumber;
+    [Header("Settings")]
     public Vector2 location;
+    public string title;
     public string[] text;
 }

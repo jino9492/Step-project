@@ -13,6 +13,7 @@ public class InteractManager : MonoBehaviour
     public TalkTextManager talkTextManager;
 
     public TextMeshProUGUI talkingText;
+    public TextMeshProUGUI talkingTitle;
     public bool showPanel = false;
     public int page = 0;
 
@@ -54,11 +55,15 @@ public class InteractManager : MonoBehaviour
         objectNumber = scanObject.GetComponent<ObjectId>().objectNumber;
         string[] text = talkTextManager.GetText(objectId * 100 + objectNumber);
 
+        talkingTitle.text = scanObject.GetComponent<ObjectId>().title;
+
         if (page == 0 || page == text.Length)
             showPanel = !showPanel;
 
         if (page < text.Length)
+        {
             talkingText.text = talkTextManager.GetText(objectId * 100 + objectNumber)[page++];
+        }
         else
             page = 0;
     }
