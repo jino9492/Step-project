@@ -7,4 +7,5 @@ public class ObjectId : MonoBehaviour
     public int objectId;
     public int objectNumber;
     public Vector2 location;
+    public string[] text;
 }

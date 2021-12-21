@@ -5,19 +5,25 @@ using UnityEngine;
 public class TalkTextManager : MonoBehaviour
 {
     public Dictionary<int,string[]> talkData = new Dictionary<int, string[]>();
-    string[] a = new string[2];
+    public ObjectId[] objectCollection;
 
     private void Awake()
     {
-        AddData();
+        objectCollection = FindObjectsOfType<ObjectId>();
+
+        foreach(ObjectId objectElement in objectCollection)
+        {
+            if (objectElement.objectId == 2)
+            {
+                AddData(objectElement);
+            }
+        }
     }
 
-    public void AddData()
+    public void AddData(ObjectId objectElement)
     {
-        a[0] = "asdf";
-        a[1] = "qwer";
         //기본 대사 - talkData.Add(오브젝트 아이디 * 100 + 오브젝트 넘버, "텍스트")
-        talkData.Add(200, a);
+        talkData.Add(objectElement.objectId * 100 + objectElement.objectNumber, objectElement.text);
 
     }
 

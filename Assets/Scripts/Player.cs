@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
             ObjectId objectData = interObject.collider.gameObject.GetComponent<ObjectId>();
             if (!objectData)
             {
-                Debug.LogError("Object ID Does Not Exist");
+                Debug.LogError("Object ID Does Not Exist : " + interObject.collider.name);
             }
             else if (interObject.collider != null && interObject.collider.tag == "InteractiveObject")
             {
