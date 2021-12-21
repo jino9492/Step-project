@@ -13,7 +13,7 @@ public class TalkTextManager : MonoBehaviour
 
         foreach(ObjectId objectElement in objectCollection)
         {
-            if (objectElement.objectId == 2)
+            if (objectElement.text.Length > 0)
             {
                 AddData(objectElement);
             }
