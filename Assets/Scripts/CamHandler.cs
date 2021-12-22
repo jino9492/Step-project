@@ -14,6 +14,8 @@ public class CamHandler : MonoBehaviour
 
     private void Start()
     {
+        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+        flash = FindObjectOfType<Flashlight>();
         camOffset = new Vector3(0, 0, camTransform.position.z);
     }
 

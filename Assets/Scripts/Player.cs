@@ -77,8 +77,6 @@ public class Player : MonoBehaviour
 
         if (isDirectionChanged)
         {
-            /*anim.SetFloat("InputX", 0);
-            anim.SetFloat("InputY", 0);*/
             anim.SetBool("IsDirectionChanged", true);
             isDirectionChanged = false;
         }
@@ -88,8 +86,8 @@ public class Player : MonoBehaviour
         }
 
         //상호작용 (space)
-        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 1.5f, Color.green);
-        RaycastHit2D interObject = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), lastDirection, 1.5f, layerMask);
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 3f, Color.green);
+        RaycastHit2D interObject = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), lastDirection, 3f, layerMask);
         if (Input.GetKeyDown(KeyCode.Space) && interObject.collider)
         {
 
