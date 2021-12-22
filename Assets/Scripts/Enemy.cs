@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
         interactManager = FindObjectOfType<InteractManager>();
         flash = FindObjectOfType<Flashlight>();
         player = FindObjectOfType<Player>().GetComponent<Transform>();
-        follower = this.GetComponent<Follower>();
+        follower = GetComponent<Follower>();
         gm = FindObjectOfType<GameManager>();
         audio = FindObjectOfType<Enemy>().GetComponent<AudioSource>();
 
