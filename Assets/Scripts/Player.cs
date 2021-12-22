@@ -60,6 +60,25 @@ public class Player : MonoBehaviour
         }
         else
             audio.Stop();
+<<<<<<< HEAD
+=======
+        }
+
+        anim.SetFloat("InputX", moveInput.x);
+        anim.SetFloat("InputY", moveInput.y);
+
+        if (isDirectionChanged)
+        {
+            /*anim.SetFloat("InputX", 0);
+            anim.SetFloat("InputY", 0);*/
+            anim.SetBool("IsDirectionChanged", true);
+            isDirectionChanged = false;
+        }
+        else
+        {
+            anim.SetBool("IsDirectionChanged", false);
+        }
+>>>>>>> parent of 36b926a (Player, Enemy 프리팹화 및 상호작용 거리 상향)
 
         //상호작용 (space)
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 1.5f, Color.green);

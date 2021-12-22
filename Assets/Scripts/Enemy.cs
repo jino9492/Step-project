@@ -52,10 +52,6 @@ public class Enemy : MonoBehaviour
         follower = this.GetComponent<Follower>();
         gm = FindObjectOfType<GameManager>();
         audio = FindObjectOfType<Enemy>().GetComponent<AudioSource>();
-        gc = FindObjectOfType<GraphController>();
-        graph = FindObjectOfType<Graph>();
-
-        targetNode = GameObject.Find("Player").GetComponent<Node>();
 
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
         nodes.allNodes = new Node[nodeObj.Length];
