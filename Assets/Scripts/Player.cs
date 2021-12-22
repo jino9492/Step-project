@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
         gm = FindObjectOfType<GameManager>();
         audio = GetComponent<AudioSource>();
 
+        gc = FindObjectOfType<GraphController>();
+
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
         nodes.allNodes = new Node[nodeObj.Length];
         for (int i = 0; i < nodeObj.Length; i++)
