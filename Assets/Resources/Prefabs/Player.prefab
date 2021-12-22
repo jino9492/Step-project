@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 9040127223922824781}
   - component: {fileID: 9040127223922824777}
   m_Layer: 9
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,7 +285,7 @@ Transform:
   m_GameObject: {fileID: 9040127224358777585}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -39, y: 3.0999997, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 9040127223364924205}
   - {fileID: 9040127222990572889}
@@ -381,14 +381,15 @@ MonoBehaviour:
   interactManager: {fileID: 0}
   gm: {fileID: 0}
   audio: {fileID: 0}
+  anim: {fileID: 9040127223922824781}
   isDirectionChanged: 0
-  moveSpeed: 10
+  moveSpeed: 20
   moveInput: {x: 0, y: 0}
   lastDirection: {x: 0, y: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 256
-  anim: {fileID: 9040127223922824781}
+  floor: 60
   gc: {fileID: 0}
   nodes:
     thisNode: {fileID: 9040127223922824777}

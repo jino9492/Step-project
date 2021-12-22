@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1217368272163207411}
   - component: {fileID: 1217368272163207420}
   m_Layer: 0
-  m_Name: Enemy 1
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
     allNodes: []
     minIndex: 0
     isNodeChanged: 1
-  chasingSpeed: 0.6
+  chasingSpeed: 1
   recognitionRange: 50
   originalSpeed: 0
 --- !u!114 &2391855648160285484
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Graph: {fileID: 0}
-  m_Speed: 0.04
+  m_Speed: 0.06
   m_Current: {fileID: 0}
 --- !u!114 &3316340711774741498
 MonoBehaviour:
