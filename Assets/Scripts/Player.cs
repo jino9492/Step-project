@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     public Vector2 lastDirection;
     public LayerMask layerMask;
 
+    public int floor = 60;
+
     #region PathFinding
     public GraphController gc;
     public NodesInfo nodes;
