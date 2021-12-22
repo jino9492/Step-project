@@ -57,7 +57,7 @@ public class InteractManager : MonoBehaviour
 
         talkingTitle.text = scanObject.GetComponent<ObjectId>().title;
 
-        if (page == 0 || page == text.Length)
+        if (page == 0 || page >= text.Length)
             showPanel = !showPanel;
 
         if (page < text.Length)
