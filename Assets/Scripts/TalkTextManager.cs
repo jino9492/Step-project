@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TalkTextManager : MonoBehaviour
 {
-    public Dictionary<int,string[]> talkData = new Dictionary<int, string[]>();
-    public ObjectId[] objectCollection;
+    private Dictionary<int,string[]> talkData = new Dictionary<int, string[]>();
+    private ObjectId[] objectCollection;
 
     private void Awake()
     {
