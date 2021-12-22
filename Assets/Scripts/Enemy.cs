@@ -67,6 +67,8 @@ public class Enemy : MonoBehaviour
         }
 
         audio.clip = walkingSound;
+
+        RePathFinding();
     }
 
     

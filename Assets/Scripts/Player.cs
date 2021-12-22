@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     public GameManager gm;
     public AudioSource audio;
 
+    public Animator anim;
+    public bool isDirectionChanged;
+
     public float moveSpeed;
     public Vector2 moveInput;
 
@@ -54,12 +57,35 @@ public class Player : MonoBehaviour
         Vector2 direction = new Vector2(moveInput.x, moveInput.y);
         if (direction != Vector2.zero)
         {
+            if (direction == lastDirection)
+                isDirectionChanged = false;
+            else
+                isDirectionChanged = true;
+
             lastDirection = direction;
             if (!audio.isPlaying)
                 audio.Play();
+
+            anim.SetBool("IsMoving", true);
         }
         else
+        {
+            anim.SetBool("IsMoving", false);
             audio.Stop();
+        }
+
+        anim.SetFloat("InputX", moveInput.x);
+        anim.SetFloat("InputY", moveInput.y);
+
+        if (isDirectionChanged)
+        {
+            anim.SetBool("IsDirectionChanged", true);
+            isDirectionChanged = false;
+        }
+        else
+        {
+            anim.SetBool("IsDirectionChanged", false);
+        }
 
         //상호작용 (space)
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 1.5f, Color.green);
