@@ -21,19 +21,9 @@ public class Flashlight : MonoBehaviour
 
     private void Update()
     {
-
-        if (player.moveInput.x == 0 || player.moveInput.y == 0) // 대각선 이동이 아닐 경우에만
-        {
-            if (player.moveInput.y < 0)
-                flashlightDeltaAngle = Quaternion.Euler(0, 0, 0); // 아래쪽
-            else if (player.moveInput.x > 0)
-                flashlightDeltaAngle = Quaternion.Euler(0, 0, 90); // 왼쪽
-            else if (player.moveInput.y > 0)
-                flashlightDeltaAngle = Quaternion.Euler(0, 0, 180); // 위쪽
-            else if (player.moveInput.x < 0)
-                flashlightDeltaAngle = Quaternion.Euler(0, 0, 270); // 오른쪽
-        }
+        CalcDirection(player.moveInput.x, player.moveInput.y);
     }
+
     private void FixedUpdate()
     {
         if (!interactManager.showPanel) //판넬있을때 움직 ㄴㄴ
@@ -60,5 +50,20 @@ public class Flashlight : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
             timer = 0;
+    }
+
+    public void CalcDirection(float x, float y)
+    {
+        if (x == 0 || y == 0) // 대각선 이동이 아닐 경우에만
+        {
+            if (y < 0)
+                flashlightDeltaAngle = Quaternion.Euler(0, 0, 0); // 아래쪽
+            else if (x > 0)
+                flashlightDeltaAngle = Quaternion.Euler(0, 0, 90); // 왼쪽
+            else if (y > 0)
+                flashlightDeltaAngle = Quaternion.Euler(0, 0, 180); // 위쪽
+            else if (x < 0)
+                flashlightDeltaAngle = Quaternion.Euler(0, 0, 270); // 오른쪽
+        }
     }
 }

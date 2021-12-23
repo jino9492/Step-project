@@ -11,6 +11,7 @@ public class InteractManager : MonoBehaviour
     public ObjectId objectIdScript;
     public Animator anim;
     public TalkTextManager talkTextManager;
+    public GameObject flashlight;
 
     public TextMeshProUGUI talkingText;
     public TextMeshProUGUI talkingTitle;
@@ -31,12 +32,14 @@ public class InteractManager : MonoBehaviour
         lockedDoor,
         unlockedDoor,
         document,
+        eventObject = 10,
     }
 
     public SpriteRenderer fadeImg;
 
     private void Start()
     {
+        flashlight = FindObjectOfType<Flashlight>().gameObject;
         player = FindObjectOfType<Player>();
         enemy = FindObjectOfType<Enemy>();
         objectIdScript = FindObjectOfType<ObjectId>();
@@ -105,6 +108,23 @@ public class InteractManager : MonoBehaviour
         }
     }
 
+    public void Event(GameObject eventObject)
+    {
+        switch (eventObject.GetComponent<ObjectId>().objectNumber)
+        {
+            case 0:
+                StartCoroutine("Event1", eventObject);
+                flashlight.SetActive(true);
+                flashlight.GetComponent<Flashlight>().CalcDirection(player.lastDirection.x, player.lastDirection.y);
+                Destroy(eventObject);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+    }
+
     IEnumerator ChangeRoom(Vector2 location)
     {
         enemy.StartCoroutine("DelayPathFinding", enemy.nodes.thisNode.connections[0]);
@@ -135,4 +155,10 @@ public class InteractManager : MonoBehaviour
         player.enabled = true;
     }
 
+    // 손전등과 지도를 얻는 이벤트
+    IEnumerator Event1(GameObject eventObject)
+    {
+        // 구현하기
+        yield return null;
+    }
 }   

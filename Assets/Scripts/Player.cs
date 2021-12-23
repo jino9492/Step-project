@@ -101,8 +101,8 @@ public class Player : MonoBehaviour
         }
 
         //상호작용 (space)
-        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 1.5f, Color.green);
-        RaycastHit2D interObject = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), lastDirection, 1.5f, layerMask);
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 5f, Color.green);
+        RaycastHit2D interObject = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), lastDirection, 5f, layerMask);
         if (Input.GetKeyDown(KeyCode.Space) && interObject.collider)
         {
             ObjectId objectData = interObject.collider.gameObject.GetComponent<ObjectId>();
@@ -124,6 +124,10 @@ public class Player : MonoBehaviour
 
                     case (int)InteractManager.objectList.document:
                         interactManager.Talking(interObject.collider.gameObject);
+                        break;
+
+                    case (int)InteractManager.objectList.eventObject:
+                        interactManager.Event(interObject.collider.gameObject);
                         break;
                 }
                 
