@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     public Vector2 lastDirection;
     public LayerMask layerMask;
 
+    public bool onTutorial;
+    public TutorialManager tutorial;
+
     public int floor = 60;
 
     #region PathFinding
@@ -28,12 +31,12 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        tutorial = FindObjectOfType<TutorialManager>();
+        gc = FindObjectOfType<GraphController>();
         enemy = FindObjectOfType<Enemy>();
         interactManager = FindObjectOfType<InteractManager>();
         gm = FindObjectOfType<GameManager>();
         audio = GetComponent<AudioSource>();
-
-        gc = FindObjectOfType<GraphController>();
 
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
         nodes.allNodes = new Node[nodeObj.Length];
@@ -43,6 +46,15 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (onTutorial)
+        {
+            tutorial.gameObject.SetActive(true);
+            if (tutorial.tutorialStep == 0)
+                tutorial.Tutorial();
+        }
+        else
+            tutorial.gameObject.SetActive(false);
+
         if (!interactManager.showPanel) //대화창있을때 움직 ㄴㄴ
         {
             moveInput.x = Input.GetAxisRaw("Horizontal");
@@ -74,6 +86,7 @@ public class Player : MonoBehaviour
             audio.Stop();
         }
 
+        // 애니메이션
         anim.SetFloat("InputX", moveInput.x);
         anim.SetFloat("InputY", moveInput.y);
 
