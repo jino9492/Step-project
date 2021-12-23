@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
         if (onTutorial)
         {
             tutorial.gameObject.SetActive(true);
-            if (tutorial.tutorialStep == 0)
+            if (tutorial.tutorialStep == -1)
                 tutorial.Tutorial();
         }
         else

@@ -17,6 +17,8 @@ public class TutorialManager : MonoBehaviour
     {
         interact = FindObjectOfType<InteractManager>();
         player = FindObjectOfType<Player>();
+
+        tutorialStep = -1;
     }
 
    
@@ -31,8 +33,18 @@ public class TutorialManager : MonoBehaviour
         player.enabled = false;
         switch (tutorialStep)
         {
+            case -1:
+                if (!nextStep)
+                {
+                    nextStep = true;
+
+                    GameObject.Find("Flashlight").SetActive(false);
+                    interact.fadeImg.color = new Color(0, 0, 0, 1);
+                    StartCoroutine("FadeOut");
+                }
+                break;
             case 0:
-                TutorialTalking(step1, 1);
+                TutorialTalking(step1, 1.5f);
                 break;
             case 1:
                 TutorialTalking(step2, 0);
@@ -59,6 +71,23 @@ public class TutorialManager : MonoBehaviour
     IEnumerator Delayer(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
+
+        tutorialStep++;
+        nextStep = false;
+
+        Tutorial();
+    }
+
+    IEnumerator FadeOut()
+    {
+        yield return new WaitForSeconds(2);
+        for (float i = 1; i >= 0; i -= Time.deltaTime / 2)
+        {
+            interact.fadeImg.color = new Color(0, 0, 0, i);
+            yield return null;
+        }
+        interact.fadeImg.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(2);
 
         tutorialStep++;
         nextStep = false;

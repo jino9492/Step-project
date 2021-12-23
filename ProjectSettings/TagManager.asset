@@ -48,3 +48,6 @@ TagManager:
   - name: Particle
     uniqueID: 2203488811
     locked: 0
+  - name: Candle
+    uniqueID: 1747230255
+    locked: 0
