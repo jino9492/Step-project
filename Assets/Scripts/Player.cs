@@ -126,9 +126,14 @@ public class Player : MonoBehaviour
                         interactManager.Talking(interObject.collider.gameObject);
                         break;
 
+                    case (int)InteractManager.objectList.key:
+                        interactManager.GetKey(interObject.collider.gameObject);
+                        break;
+
                     case (int)InteractManager.objectList.eventObject:
                         interactManager.Event(interObject.collider.gameObject);
                         break;
+
                 }
                 
             }

@@ -27,11 +27,14 @@ public class InteractManager : MonoBehaviour
     public int objectId;
     public int objectNumber;
 
+    public bool[] key;
+
     public enum objectList
     {
         lockedDoor,
         unlockedDoor,
         document,
+        key,
         eventObject = 10,
     }
 
@@ -106,6 +109,16 @@ public class InteractManager : MonoBehaviour
             audio.clip = doorLockSFX;
             audio.Play();
         }
+    }
+
+    public void GetKey(GameObject scanObject)
+    {
+        ObjectId obj = scanObject.GetComponent<ObjectId>();
+
+        Talking(scanObject);
+        key[obj.objectNumber] = true;
+        if (page == 0)
+            Destroy(scanObject);
     }
 
     public void Event(GameObject eventObject)
