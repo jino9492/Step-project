@@ -18,8 +18,13 @@ public class Title : MonoBehaviour
         
     }
 
-    public void LoadGame()
+    public void NewGame()
     {
         SceneManager.LoadScene(SceneToLoad);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
