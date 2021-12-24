@@ -22,12 +22,8 @@ public class InteractManager : MonoBehaviour
     public AudioClip doorLockSFX;
     public AudioSource audio;
 
-    public bool inRoom = false;
-
     public int objectId;
     public int objectNumber;
-
-    public bool[] key;
 
     public enum objectList
     {
@@ -83,9 +79,9 @@ public class InteractManager : MonoBehaviour
 
         if (!enemy.isPlayerFounded)
         {
-            inRoom = !inRoom;
+            player.inRoom = !player.inRoom;
             Debug.Log(scanObject);
-            if (inRoom)
+            if (player.inRoom)
             {
                 audioFilterEnemy.enabled = true;
                 audioListener.enabled = true;
@@ -116,7 +112,7 @@ public class InteractManager : MonoBehaviour
         ObjectId obj = scanObject.GetComponent<ObjectId>();
 
         Talking(scanObject);
-        key[obj.objectNumber] = true;
+        player.key[obj.objectNumber] = true;
         if (page == 0)
             Destroy(scanObject);
     }
