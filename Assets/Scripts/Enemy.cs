@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
 
     #region General
     [Header("General")]
-    public Transform player;
+    public Player player;
     public GameObject enemyPrefab;
     public GameManager gm;
     public Vector2[] spawnPoints;
@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour
     {
         interactManager = FindObjectOfType<InteractManager>();
         flash = FindObjectOfType<Flashlight>();
-        player = FindObjectOfType<Player>().GetComponent<Transform>();
+        player = FindObjectOfType<Player>();
         follower = GetComponent<Follower>();
         gm = FindObjectOfType<GameManager>();
         audio = FindObjectOfType<Enemy>().GetComponent<AudioSource>();
@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
         if (nodes.isNodeChanged && !isPlayerFounded)
         {
             // 리스폰 후, 혹은 랜덤으로 2초간 멈칫
-            if (interactManager.inRoom)
+            if (player.inRoom)
             {
                 Node randNode;
                 do{
@@ -140,7 +140,7 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < nodes.allNodes.Length; i++)
         {
             spawn = spawnPoints[Random.Range(0, spawnPoints.Length - 1)]; // 리스폰 장소 설정
-            if (Vector2.Distance(spawn, player.position) > respawnPointMinDistance) // 리스폰 거리 조건을 만족시킬 경우
+            if (Vector2.Distance(spawn, player.transform.position) > respawnPointMinDistance) // 리스폰 거리 조건을 만족시킬 경우
                 break;
         }
 
@@ -202,7 +202,7 @@ public class Enemy : MonoBehaviour
     {
         StopCoroutine("DelayPathFinding");
         ResetPathFinding();
-        transform.position = Vector3.MoveTowards(transform.position, player.position, chasingSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, chasingSpeed);
     }
 
     IEnumerator DelayPathFinding()

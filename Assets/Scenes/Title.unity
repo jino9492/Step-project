@@ -821,6 +821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneToLoad: FirstFloor
+  loadGameButton: {fileID: 0}
 --- !u!4 &1456946986
 Transform:
   m_ObjectHideFlags: 0

@@ -8,13 +8,20 @@ using UnityEngine.UI;
 public class Title : MonoBehaviour
 {
     public string SceneToLoad;
+    public Button loadGameButton;
 
     void Start()
     {
+        loadGameButton = GameObject.Find("LoadGameButton").GetComponent<Button>();
         string path = Application.persistentDataPath + "/SaveData.savedata";
         if (!File.Exists(path))
         {
-            GameObject.Find("LoadGameButton").GetComponent<Image>().color = new Color(100, 100, 100);
+            ColorBlock colors = loadGameButton.colors;
+            colors.normalColor = new Color32(100, 100, 100, 255);
+            colors.pressedColor = new Color32(100, 100, 100, 255);
+            colors.selectedColor = new Color32(100, 100, 100, 255);
+            colors.highlightedColor = new Color32(100, 100, 100, 255);
+            loadGameButton.colors = colors;
         }
     }
 

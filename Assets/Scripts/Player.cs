@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public InteractManager interactManager;
     public GameManager gm;
     public AudioSource audio;
+    public TutorialManager tutorial;
 
     public Animator anim;
     public bool isDirectionChanged;
@@ -19,11 +20,15 @@ public class Player : MonoBehaviour
     public Vector2 lastDirection;
     public LayerMask layerMask;
 
-    public bool onTutorial;
-    public TutorialManager tutorial;
-
+    [Header("Save Data")]
+    #region SaveData
     public int floor = 60;
+    public bool onTutorial;
+    public bool inRoom;
+    public bool[] key;
+    #endregion
 
+    [Header("Path Finding")]
     #region PathFinding
     public GraphController gc;
     public NodesInfo nodes;
@@ -126,9 +131,14 @@ public class Player : MonoBehaviour
                         interactManager.Talking(interObject.collider.gameObject);
                         break;
 
+                    case (int)InteractManager.objectList.key:
+                        interactManager.GetKey(interObject.collider.gameObject);
+                        break;
+
                     case (int)InteractManager.objectList.eventObject:
                         interactManager.Event(interObject.collider.gameObject);
                         break;
+
                 }
                 
             }
@@ -137,7 +147,7 @@ public class Player : MonoBehaviour
         if (nodes.isNodeChanged)
             nodes.isNodeChanged = false;
 
-        if (!interactManager.inRoom)
+        if (!inRoom)
         {
             if (nodes.thisNode.connections.Count == 0)
             {
