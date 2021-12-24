@@ -45,6 +45,7 @@ public class InteractManager : MonoBehaviour
         objectIdScript = FindObjectOfType<ObjectId>();
         talkTextManager = FindObjectOfType<TalkTextManager>();
         fadeImg = GameObject.Find("FadeImage").GetComponent<SpriteRenderer>();
+        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -124,6 +125,8 @@ public class InteractManager : MonoBehaviour
 
         if (player.key[obj.objectNumber])
         {
+            if (player.inRoom)
+                player.inRoom = !player.inRoom;
             OpenDoor(scanObject);
         }
         else
