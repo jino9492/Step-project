@@ -23,9 +23,11 @@ public class Player : MonoBehaviour
     [Header("Save Data")]
     #region SaveData
     public int floor = 60;
+    public int keyRoomStack = 0;
     public bool onTutorial;
     public bool inRoom;
     public bool[] key;
+    public bool isGameStarted; // 괴물 활동 시작 시기 (철창 너머로 괴물 처음 봤을 때 기준)
     #endregion
 
     [Header("Path Finding")]
@@ -51,6 +53,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (!isGameStarted)
+            enemy.gameObject.SetActive(false);
+        else
+            enemy.gameObject.SetActive(true);
+
         if (onTutorial)
         {
             tutorial.gameObject.SetActive(true);

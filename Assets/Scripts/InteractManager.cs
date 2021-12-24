@@ -125,9 +125,14 @@ public class InteractManager : MonoBehaviour
 
         if (player.key[obj.objectNumber])
         {
-            if (player.inRoom)
-                player.inRoom = !player.inRoom;
-            OpenDoor(scanObject);
+            if (obj.isHallwayToRoom)
+            {
+                OpenDoor(scanObject);
+            }
+            else
+            {
+                StartCoroutine("ChangeRoom", obj.location);
+            }
         }
         else
         {
@@ -157,7 +162,8 @@ public class InteractManager : MonoBehaviour
 
     IEnumerator ChangeRoom(Vector2 location)
     {
-        enemy.StartCoroutine("DelayPathFinding", enemy.nodes.thisNode.connections[0]);
+        if (enemy.gameObject.activeSelf)
+            enemy.StartCoroutine("DelayPathFinding", enemy.nodes.thisNode.connections[0]);
         player.enabled = false;
 
         // 효과음 오디오 소스는 메인 카메라에 달려있음.

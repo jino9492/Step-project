@@ -10,4 +10,6 @@ public class ObjectId : MonoBehaviour
     public Vector2 location;
     public string title;
     public string[] text;
+
+    public bool isHallwayToRoom;
 }
