@@ -11,5 +11,5 @@ public class ObjectId : MonoBehaviour
     public string title;
     public string[] text;
 
-    public bool isHallwayToRoom;
+    public bool isAdjacentToHallway;
 }

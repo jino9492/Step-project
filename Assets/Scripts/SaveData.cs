@@ -6,7 +6,6 @@ using UnityEngine;
 public class SaveData
 {
     public int floor;
-    public int keyRoomStack;
     public float[] playerPosition;
     public bool[] key;
     public bool inRoom;
@@ -16,7 +15,6 @@ public class SaveData
     public SaveData(Player player)
     {
         onTutorial = player.onTutorial;
-        keyRoomStack = player.keyRoomStack;
         floor = player.floor;
         key = player.key;
         inRoom = player.inRoom;

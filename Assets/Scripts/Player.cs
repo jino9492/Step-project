@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
     [Header("Save Data")]
     #region SaveData
     public int floor = 60;
-    public int keyRoomStack = 0;
     public bool onTutorial;
     public bool inRoom;
     public bool[] key;

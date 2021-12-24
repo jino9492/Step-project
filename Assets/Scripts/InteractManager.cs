@@ -125,7 +125,7 @@ public class InteractManager : MonoBehaviour
 
         if (player.key[obj.objectNumber])
         {
-            if (obj.isHallwayToRoom)
+            if (obj.isAdjacentToHallway)
             {
                 OpenDoor(scanObject);
             }
