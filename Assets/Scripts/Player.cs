@@ -135,6 +135,10 @@ public class Player : MonoBehaviour
                         interactManager.GetKey(interObject.collider.gameObject);
                         break;
 
+                    case (int)InteractManager.objectList.openableDoor:
+                        interactManager.OpenDoorByKey(interObject.collider.gameObject);
+                        break;
+
                     case (int)InteractManager.objectList.eventObject:
                         interactManager.Event(interObject.collider.gameObject);
                         break;

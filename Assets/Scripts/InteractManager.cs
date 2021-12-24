@@ -27,11 +27,12 @@ public class InteractManager : MonoBehaviour
 
     public enum objectList
     {
-        lockedDoor,
-        unlockedDoor,
-        document,
-        key,
-        eventObject = 10,
+        lockedDoor, // 0
+        unlockedDoor, // 1
+        document, // 2
+        key, // 3
+        openableDoor, // 4
+        eventObject = 10, // 10
     }
 
     public SpriteRenderer fadeImg;
@@ -115,6 +116,23 @@ public class InteractManager : MonoBehaviour
         player.key[obj.objectNumber] = true;
         if (page == 0)
             Destroy(scanObject);
+    }
+
+    public void OpenDoorByKey(GameObject scanObject)
+    {
+        ObjectId obj = scanObject.GetComponent<ObjectId>();
+
+        if (player.key[obj.objectNumber])
+        {
+            OpenDoor(scanObject);
+        }
+        else
+        {
+            if (page == 0)
+                LockedDoor();
+
+            Talking(scanObject);
+        }
     }
 
     public void Event(GameObject eventObject)
