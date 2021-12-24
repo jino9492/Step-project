@@ -53,10 +53,17 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (!isGameStarted)
-            enemy.gameObject.SetActive(false);
+        if (enemy != null)
+        {
+            if (!isGameStarted)
+                enemy.gameObject.SetActive(false);
+            else
+                enemy.gameObject.SetActive(true);
+        }
         else
-            enemy.gameObject.SetActive(true);
+        {
+            Debug.LogError("Enemy's state is false");
+        }
 
         if (onTutorial)
         {
