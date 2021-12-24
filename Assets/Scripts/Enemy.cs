@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     private float distToPlayer;
 
     #region Audio
-    private AudioSource audio;
+    private AudioSource audioSource;
     public AudioClip walkingSound;
     public AudioClip runningSound;
     #endregion
@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
         player = FindObjectOfType<Player>();
         follower = GetComponent<Follower>();
         gm = FindObjectOfType<GameManager>();
-        audio = FindObjectOfType<Enemy>().GetComponent<AudioSource>();
+        audioSource = FindObjectOfType<Enemy>().GetComponent<AudioSource>();
         gc = FindObjectOfType<GraphController>();
         graph = FindObjectOfType<Graph>();
 
@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
             spawnPoints[i] = nodeObj[i].GetComponent<Node>().transform.position;
         }
 
-        audio.clip = walkingSound;
+        audioSource.clip = walkingSound;
 
         RePathFinding();
     }
@@ -155,7 +155,7 @@ public class Enemy : MonoBehaviour
         isPlayerFounded = false;
         flash.isEnemyDead = false;
 
-        audio.clip = walkingSound;
+        audioSource.clip = walkingSound;
     }
 
     public void RePathFinding() // AI : 길 찾기
@@ -189,9 +189,9 @@ public class Enemy : MonoBehaviour
         {
             isPlayerFounded = true;
 
-            audio.Stop();
-            audio.clip = runningSound;
-            audio.Play();
+            audioSource.Stop();
+            audioSource.clip = runningSound;
+            audioSource.Play();
 
             if (isRespawned)
                 isRespawned = false;
@@ -207,20 +207,20 @@ public class Enemy : MonoBehaviour
 
     IEnumerator DelayPathFinding()
     {
-        audio.Stop();
+        audioSource.Stop();
         ResetPathFinding();
         yield return new WaitForSeconds(2);
-        audio.Play();
+        audioSource.Play();
         RePathFinding();
         isRespawned = false;
     }
 
     IEnumerator DelayPathFinding(Node node)
     {
-        audio.Stop();
+        audioSource.Stop();
         ResetPathFinding();
         yield return new WaitForSeconds(2);
-        audio.Play();
+        audioSource.Play();
         RePathFinding(node);
         isRespawned = false;
     }

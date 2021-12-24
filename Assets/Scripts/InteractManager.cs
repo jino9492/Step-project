@@ -20,7 +20,7 @@ public class InteractManager : MonoBehaviour
 
     public AudioClip doorOpenSFX;
     public AudioClip doorLockSFX;
-    public AudioSource audio;
+    public AudioSource audioSource;
 
     public int objectId;
     public int objectNumber;
@@ -101,10 +101,10 @@ public class InteractManager : MonoBehaviour
 
     public void LockedDoor()
     {
-        if (!audio.isPlaying)
+        if (!audioSource.isPlaying)
         {
-            audio.clip = doorLockSFX;
-            audio.Play();
+            audioSource.clip = doorLockSFX;
+            audioSource.Play();
         }
     }
 
@@ -158,8 +158,8 @@ public class InteractManager : MonoBehaviour
         player.enabled = false;
 
         // 효과음 오디오 소스는 메인 카메라에 달려있음.
-        audio.clip = doorOpenSFX;
-        audio.Play();
+        audioSource.clip = doorOpenSFX;
+        audioSource.Play();
 
         for (float i = 0; i <= 1; i += Time.deltaTime * 5)
         {

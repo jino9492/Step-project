@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     public InteractManager interactManager;
     public GameManager gm;
-    public AudioSource audio;
+    public AudioSource audioSource;
     public TutorialManager tutorial;
 
     public Animator anim;
@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();
         interactManager = FindObjectOfType<InteractManager>();
         gm = FindObjectOfType<GameManager>();
-        audio = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
 
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
         nodes.allNodes = new Node[nodeObj.Length];
@@ -80,15 +80,15 @@ public class Player : MonoBehaviour
                 isDirectionChanged = true;
 
             lastDirection = direction;
-            if (!audio.isPlaying)
-                audio.Play();
+            if (!audioSource.isPlaying)
+                audioSource.Play();
 
             anim.SetBool("IsMoving", true);
         }
         else
         {
             anim.SetBool("IsMoving", false);
-            audio.Stop();
+            audioSource.Stop();
         }
 
         // 애니메이션
