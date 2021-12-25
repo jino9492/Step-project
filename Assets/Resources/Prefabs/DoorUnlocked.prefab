@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3830073731610048287}
   m_Layer: 0
   m_Name: DoorUnlocked
-  m_TagString: Untagged
+  m_TagString: InteractiveObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,6 +76,7 @@ MonoBehaviour:
   location: {x: 0, y: 0}
   title: 
   text: []
+  isAdjacentToHallway: 0
 --- !u!81 &3830073731610048287
 AudioListener:
   m_ObjectHideFlags: 0

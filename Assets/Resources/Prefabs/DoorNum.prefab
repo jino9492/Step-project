@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 556861942940454829}
   m_Layer: 0
   m_Name: DoorNum
-  m_TagString: Untagged
+  m_TagString: InteractiveObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,4 +76,4 @@ MonoBehaviour:
   title: 
   text:
   - "6001\uD638"
-  isHallwayToRoom: 0
+  isAdjacentToHallway: 0
