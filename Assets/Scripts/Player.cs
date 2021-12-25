@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         interactManager = FindObjectOfType<InteractManager>();
         gm = FindObjectOfType<GameManager>();
         audioSource = GetComponent<AudioSource>();
-        key = new bool[key.Length - 1];
+        key = new bool[key.Length];
         Debug.Log(key[0]);
 
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");

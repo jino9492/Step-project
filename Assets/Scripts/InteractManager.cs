@@ -200,14 +200,18 @@ public class InteractManager : MonoBehaviour
         switch (eventObject.GetComponent<ObjectId>().objectNumber)
         {
             case 0:
-                if (!flashlight.activeSelf)
-                {
-                    flashlight.SetActive(true);
-                    flashlight.GetComponent<Flashlight>().CalcDirection(player.lastDirection.x, player.lastDirection.y);
-                }
+                
                 Talking(eventObject);
                 if (page == 0)
+                {
+                    if (!flashlight.activeSelf)
+                    {
+                        flashlight.SetActive(true);
+                        flashlight.GetComponent<Flashlight>().CalcDirection(player.lastDirection.x, player.lastDirection.y);
+                    }
+
                     Destroy(eventObject);
+                }
                 break;
             case 1:
                 if (!mapImg.gameObject.activeSelf)
