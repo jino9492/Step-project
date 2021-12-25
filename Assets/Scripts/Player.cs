@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     public bool inRoom;
     public bool[] key;
     public bool isGameStarted; // 괴물 활동 시작 시기 (철창 너머로 괴물 처음 봤을 때 기준)
+    public bool isGameCleared;
     #endregion
 
     [Header("Path Finding")]
@@ -45,6 +46,8 @@ public class Player : MonoBehaviour
         interactManager = FindObjectOfType<InteractManager>();
         gm = FindObjectOfType<GameManager>();
         audioSource = GetComponent<AudioSource>();
+        key = new bool[key.Length - 1];
+        Debug.Log(key[0]);
 
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
         nodes.allNodes = new Node[nodeObj.Length];
@@ -156,6 +159,14 @@ public class Player : MonoBehaviour
 
                     case (int)InteractManager.objectList.openableDoor:
                         interactManager.OpenDoorByKey(interObject.collider.gameObject);
+                        break;
+
+                    case (int)InteractManager.objectList.lever:
+                        interactManager.Lever(interObject.collider.gameObject);
+                        break;
+
+                    case (int)InteractManager.objectList.elevator:
+                        interactManager.Elevator(interObject.collider.gameObject);
                         break;
 
                     case (int)InteractManager.objectList.eventObject:

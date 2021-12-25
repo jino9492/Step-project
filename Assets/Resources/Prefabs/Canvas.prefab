@@ -904,12 +904,16 @@ MonoBehaviour:
   anim: {fileID: 1286016893547868074}
   talkTextManager: {fileID: 0}
   flashlight: {fileID: 0}
+  gm: {fileID: 0}
   talkingText: {fileID: 1286016893999184323}
   talkingTitle: {fileID: 1286016893655426813}
   showPanel: 0
   page: 0
   doorOpenSFX: {fileID: 8300000, guid: 1273b3b27f7022f439d26080369cd264, type: 3}
   doorLockSFX: {fileID: 8300000, guid: 2d680300672c05b4185ff19e1eae8495, type: 3}
+  documentSFX: {fileID: 8300000, guid: 71b4e77733436f54e9d048a9f4f5fae8, type: 3}
+  leverSFX: {fileID: 8300000, guid: 8c2258cedecfaad4aa7ab88d3643bd78, type: 3}
+  elevatorSFX: {fileID: 8300000, guid: b229507610c513d49bea73daa7750277, type: 3}
   audioSource: {fileID: 0}
   objectId: 0
   objectNumber: 0

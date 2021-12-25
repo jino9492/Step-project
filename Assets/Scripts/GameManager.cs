@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
         player.key = data.key;
         player.inRoom = data.inRoom;
         player.isGameStarted = data.isGameStarted;
+        player.isGameCleared = data.isGameCleared;
         player.floor = data.floor;
 
         Vector2 position;

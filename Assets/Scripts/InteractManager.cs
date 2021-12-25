@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class InteractManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class InteractManager : MonoBehaviour
     public Animator anim;
     public TalkTextManager talkTextManager;
     public GameObject flashlight;
+    public GameManager gm;
 
     public TextMeshProUGUI talkingText;
     public TextMeshProUGUI talkingTitle;
@@ -20,7 +22,11 @@ public class InteractManager : MonoBehaviour
 
     public AudioClip doorOpenSFX;
     public AudioClip doorLockSFX;
+    public AudioClip documentSFX;
+    public AudioClip leverSFX;
+    public AudioClip elevatorSFX;
     public AudioSource audioSource;
+
     AudioListener audioListener;
     AudioListener audioListenerPlayer;
     AudioLowPassFilter audioFilterEnemy;
@@ -35,6 +41,8 @@ public class InteractManager : MonoBehaviour
         document, // 2
         key, // 3
         openableDoor, // 4
+        lever, // 5
+        elevator, // 6
         eventObject = 10, // 10
     }
 
@@ -49,6 +57,7 @@ public class InteractManager : MonoBehaviour
         talkTextManager = FindObjectOfType<TalkTextManager>();
         fadeImg = GameObject.Find("FadeImage").GetComponent<Image>();
         audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+        gm = FindObjectOfType<GameManager>();
 
         audioListenerPlayer = player.GetComponent<AudioListener>();
         audioFilterEnemy = enemy.GetComponent<AudioLowPassFilter>();
@@ -70,10 +79,14 @@ public class InteractManager : MonoBehaviour
         if (page == 0 || page >= text.Length)
             showPanel = !showPanel;
 
-        if (page < text.Length)
+        if (objectId == (int)InteractManager.objectList.document && page == 0)
         {
-            talkingText.text = talkTextManager.GetText(objectId * 100 + objectNumber)[page++];
+            audioSource.clip = documentSFX;
+            audioSource.Play();
         }
+
+        if (page < text.Length)
+            talkingText.text = talkTextManager.GetText(objectId * 100 + objectNumber)[page++];
         else
             page = 0;
     }
@@ -154,6 +167,36 @@ public class InteractManager : MonoBehaviour
         }
     }
 
+    public void Lever(GameObject scanObject)
+    {
+        if (!player.isGameCleared)
+        {
+            player.isGameCleared = true;
+            player.isGameStarted = false;
+
+            flashlight.SetActive(false);
+            enemy.gameObject.SetActive(false);
+            gm.globalLight.SetActive(true);
+
+            audioSource.clip = leverSFX;
+            audioSource.Play();
+
+            Talking(scanObject);
+        }
+        else
+        {
+            Talking(scanObject);
+        }
+    }
+
+    public void Elevator(GameObject scanObject)
+    {
+        if (player.isGameCleared)
+            StartCoroutine("ChangeStage", scanObject.GetComponent<ObjectId>().sceneName);
+        else
+            Talking(scanObject);
+    }
+
     public void Event(GameObject eventObject)
     {
         switch (eventObject.GetComponent<ObjectId>().objectNumber)
@@ -202,6 +245,31 @@ public class InteractManager : MonoBehaviour
 
         player.enabled = true;
         fadeImg.gameObject.SetActive(false);
+    }
+
+    IEnumerator ChangeStage(string sceneName)
+    {
+        fadeImg.gameObject.SetActive(true);
+        if (enemy.gameObject.activeSelf)
+            enemy.StartCoroutine("DelayPathFinding", enemy.nodes.thisNode.connections[0]);
+        player.enabled = false;
+
+        // 효과음 오디오 소스는 메인 카메라에 달려있음.
+
+        for (float i = 0; i <= 1; i += Time.deltaTime * 5)
+        {
+            fadeImg.color = new Color(0, 0, 0, i);
+            yield return null;
+        }
+
+        fadeImg.color = new Color(0, 0, 0, 1);
+
+        yield return new WaitForSeconds(2);
+        audioSource.clip = elevatorSFX;
+        audioSource.Play();
+        yield return new WaitForSeconds(4);
+
+        SceneManager.LoadScene(sceneName);
     }
 
     // 손전등과 지도를 얻는 이벤트

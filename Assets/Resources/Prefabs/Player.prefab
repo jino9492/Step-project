@@ -258,15 +258,41 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 256
+  isDead: 0
   floor: 60
   onTutorial: 0
-  inRoom: 0
+  inRoom: 1
   key: 000000
   isGameStarted: 0
+  isGameCleared: 0
   gc: {fileID: 0}
   nodes:
     thisNode: {fileID: 9040127223922824777}
-    allNodes: []
+    allNodes:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     minIndex: 0
     isNodeChanged: 1
 --- !u!61 &9040127224358777588
