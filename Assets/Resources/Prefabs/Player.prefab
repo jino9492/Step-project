@@ -198,7 +198,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 15
   m_Sprite: {fileID: -1794455059901416148, guid: e43d92ffaa7377842a7c8a05c7f44499,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -260,7 +260,7 @@ MonoBehaviour:
     m_Bits: 256
   isDead: 0
   floor: 60
-  onTutorial: 0
+  onTutorial: 1
   inRoom: 1
   key: 000000
   isGameStarted: 0
@@ -308,7 +308,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.09956694, y: -1.493449}
+  m_Offset: {x: 0.09956694, y: -5.0564923}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -319,7 +319,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.3603964, y: 12.135067}
+  m_Size: {x: 6.3603964, y: 5.0089808}
   m_EdgeRadius: 0
 --- !u!61 &8936800727236597900
 BoxCollider2D:
@@ -334,7 +334,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.09956682, y: -1.54323}
+  m_Offset: {x: 0.09956694, y: -5.047625}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -345,7 +345,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.758651, y: 12.433752}
+  m_Size: {x: 6.758651, y: 5.424962}
   m_EdgeRadius: 0
 --- !u!81 &9040127223922824779
 AudioListener:

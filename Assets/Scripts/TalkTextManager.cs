@@ -10,9 +10,12 @@ public class TalkTextManager : MonoBehaviour
     private void Awake()
     {
         objectCollection = FindObjectsOfType<ObjectId>();
-
-        foreach(ObjectId objectElement in objectCollection)
+        string[] value = new string[1000];
+        foreach (ObjectId objectElement in objectCollection)
         {
+            if (talkData.TryGetValue(objectElement.objectId * 100 + objectElement.objectNumber, out value))
+                continue;
+
             if (objectElement.text.Length > 0)
             {
                 AddData(objectElement);
