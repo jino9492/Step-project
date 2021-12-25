@@ -138,7 +138,10 @@ public class InteractManager : MonoBehaviour
         Talking(scanObject);
         player.key[obj.objectNumber] = true;
         if (page == 0)
+        {
+            SaveSystem.Save(player);
             Destroy(scanObject);
+        }
     }
 
     public void OpenDoorByKey(GameObject scanObject)
@@ -185,12 +188,17 @@ public class InteractManager : MonoBehaviour
         {
             Talking(scanObject);
         }
+
+        if (page == 0)
+        {
+            SaveSystem.Save(player);
+        }
     }
 
     public void Elevator(GameObject scanObject)
     {
         if (player.isGameCleared)
-            StartCoroutine("ChangeStage", scanObject.GetComponent<ObjectId>().sceneName);
+            StartCoroutine("ChangeStage", scanObject.GetComponent<ObjectId>().floor);
         else
             Talking(scanObject);
     }
@@ -271,7 +279,7 @@ public class InteractManager : MonoBehaviour
         fadeImg.gameObject.SetActive(false);
     }
 
-    IEnumerator ChangeStage(string sceneName)
+    IEnumerator ChangeStage(int floor)
     {
         fadeImg.gameObject.SetActive(true);
         if (enemy.gameObject.activeSelf)
@@ -293,6 +301,9 @@ public class InteractManager : MonoBehaviour
         audioSource.Play();
         yield return new WaitForSeconds(4);
 
-        SceneManager.LoadScene(sceneName);
+        FloorData floorData = new FloorData();
+        player.floor = floor;
+
+        SceneManager.LoadScene(floorData.data[player.floor]);
     }
 }   

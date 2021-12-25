@@ -9,5 +9,6 @@ public class FloorData : MonoBehaviour
     public FloorData()
     {
         data.Add(60, "FirstFloor");
+        data.Add(30, "SecondFloor");
     }
 }
