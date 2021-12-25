@@ -17,14 +17,18 @@ public class GameManager : MonoBehaviour
 
     public Image gameOverPanel;
 
-    public Dictionary<int, string> floorData = new Dictionary<int, string>();
+    public FloorData floor = new FloorData();
+    public static bool isLoadedGame;
 
     float canRestartTimer = 0;
 
     private void Awake()
     {
-        // 각 층에 대한 씬의 문자열
-        floorData.Add(60, "FirstFloor");
+        if (isLoadedGame)
+        {
+            LoadGame();
+            isLoadedGame = false;
+        }
     }
 
     private void Start()
@@ -109,7 +113,7 @@ public class GameManager : MonoBehaviour
 
         player.transform.position = position;
 
-        SceneManager.LoadScene(floorData[player.floor]);
+        SceneManager.LoadScene(floor.data[player.floor]);
     }
 
     IEnumerator CoGameOver()

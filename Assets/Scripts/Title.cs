@@ -10,6 +10,8 @@ public class Title : MonoBehaviour
     public string SceneToLoad;
     public Button loadGameButton;
 
+    public FloorData floor = new FloorData();
+
     void Start()
     {
         loadGameButton = GameObject.Find("LoadGameButton").GetComponent<Button>();
@@ -25,12 +27,6 @@ public class Title : MonoBehaviour
         }
     }
 
-    
-    void Update()
-    {
-        
-    }
-
     public void NewGame()
     {
         SceneManager.LoadScene(SceneToLoad);
@@ -41,7 +37,9 @@ public class Title : MonoBehaviour
         string path = Application.persistentDataPath + "/SaveData.savedata";
         if (File.Exists(path))
         {
-
+            SaveData data = SaveSystem.Load();
+            GameManager.isLoadedGame = true;
+            SceneManager.LoadScene(floor.data[data.floor]);
         }
     }
 
