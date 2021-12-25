@@ -223,14 +223,25 @@ public class InteractManager : MonoBehaviour
                 break;
             case 1:
                 if (!mapImg.gameObject.activeSelf)
-                {
                     player.hasMap = true;
-                }
+
                 Talking(eventObject);
                 if (page == 0)
                     Destroy(eventObject);
                 break;
             case 2:
+                player.isGameStarted = true;
+                if (!enemy.gameObject.activeSelf)
+                {
+                    enemy.gameObject.SetActive(true);
+                    enemy.nodes.isNodeChanged = true;
+                    StartCoroutine("Event3", eventObject);
+                }
+                Talking(eventObject);
+
+                if (page == 0)
+                    Destroy(eventObject);
+
                 break;
         }
     }
@@ -282,8 +293,6 @@ public class InteractManager : MonoBehaviour
     IEnumerator ChangeStage(int floor)
     {
         fadeImg.gameObject.SetActive(true);
-        if (enemy.gameObject.activeSelf)
-            enemy.StartCoroutine("DelayPathFinding", enemy.nodes.thisNode.connections[0]);
         player.enabled = false;
 
         // 효과음 오디오 소스는 메인 카메라에 달려있음.
@@ -304,6 +313,18 @@ public class InteractManager : MonoBehaviour
         FloorData floorData = new FloorData();
         player.floor = floor;
 
+        SaveSystem.Save(player);
+
         SceneManager.LoadScene(floorData.data[player.floor]);
+    }
+
+    IEnumerator Event3(GameObject eventObject)
+    {
+        yield return new WaitUntil(() =>
+        {
+            return Input.GetKeyDown(KeyCode.Space);
+        });
+
+        Event(eventObject);
     }
 }   

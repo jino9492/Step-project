@@ -173,7 +173,6 @@ public class Enemy : MonoBehaviour
     public void ResetPathFinding()
     {
         Path path = graph.GetShortestPath(nodes.thisNode, nodes.thisNode); // PathFinding 초기화
-        Debug.Log(path);
         follower.Follow(path);
     }
 

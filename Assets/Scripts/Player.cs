@@ -214,4 +214,18 @@ public class Player : MonoBehaviour
     {
         rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        int ID = 0;
+        int NUM = 0;
+        if (collision.gameObject.GetComponent<ObjectId>() != null)
+        {
+            ID = collision.gameObject.GetComponent<ObjectId>().objectId;
+            NUM = collision.gameObject.GetComponent<ObjectId>().objectNumber;
+        }
+
+        if (ID == 10 && NUM == 2)
+            interactManager.Event(collision.gameObject);
+    }
 }

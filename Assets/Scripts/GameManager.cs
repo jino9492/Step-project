@@ -18,28 +18,27 @@ public class GameManager : MonoBehaviour
 
     public Image gameOverPanel;
 
-    public FloorData floor = new FloorData();
+    public FloorData floor;
     public static bool isLoadedGame;
 
     float canRestartTimer = 0;
     bool flag = true;
 
-    private void Awake()
+    private void Start()
     {
+        player = FindObjectOfType<Player>();
+
         if (isLoadedGame)
         {
             LoadGame();
             isLoadedGame = false;
         }
-    }
 
-    private void Start()
-    {
         globalLight.SetActive(false);
         enemy = FindObjectOfType<Enemy>();
-        player = FindObjectOfType<Player>();
         gameOverPanel = GameObject.Find("GameOver").GetComponent<Image>();
         inter = FindObjectOfType<InteractManager>();
+        floor = new FloorData();
 
         InitProperties();
     }
@@ -92,9 +91,10 @@ public class GameManager : MonoBehaviour
         {
             string path = Application.persistentDataPath + "/SaveData.savedata";
             if (File.Exists(path))
-                LoadGame();
-            else
-                SceneManager.LoadScene("SampleScene");
+            {
+                isLoadedGame = true;
+                SceneManager.LoadScene(floor.data[player.floor]);
+            }
         }
     }
 
@@ -125,8 +125,6 @@ public class GameManager : MonoBehaviour
         position.y = data.playerPosition[1];
 
         player.transform.position = position;
-
-        SceneManager.LoadScene(floor.data[player.floor]);
     }
 
     IEnumerator CoGameOver()

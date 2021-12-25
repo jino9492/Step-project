@@ -8,7 +8,11 @@ public class GraphController : MonoBehaviour
     {
         for (int i = 0; i < allNodes.Length; i++)
         {
-            if (Vector2.Distance(thisNode.transform.position, allNodes[minIndex].transform.position) > Vector2.Distance(thisNode.transform.position, allNodes[i].transform.position))
+            float distToPlayer = Vector2.Distance(allNodes[i].transform.position, thisNode.transform.position);
+            Vector2 dir = (thisNode.transform.position - allNodes[i].transform.position).normalized;
+            bool isBlinded = Physics2D.Raycast(allNodes[i].transform.position, dir, distToPlayer, 1 << LayerMask.NameToLayer("Obstacle")).collider == null ? true : false;
+
+            if (Vector2.Distance(thisNode.transform.position, allNodes[minIndex].transform.position) > Vector2.Distance(thisNode.transform.position, allNodes[i].transform.position) && isBlinded)
             {
                 isNodeChanged = true;
                 allNodes[minIndex].connections.Remove(thisNode);
@@ -26,7 +30,11 @@ public class GraphController : MonoBehaviour
     {
         for (int i = 0; i < allNodes.Length; i++)
         {
-            if (Vector2.Distance(thisNode.transform.position, allNodes[minIndex].transform.position) > Vector2.Distance(thisNode.transform.position, allNodes[i].transform.position) || first)
+            float distToPlayer = Vector2.Distance(allNodes[i].transform.position, thisNode.transform.position);
+            Vector2 dir = (thisNode.transform.position - allNodes[i].transform.position).normalized;
+            bool isBlinded = Physics2D.Raycast(allNodes[i].transform.position, dir, distToPlayer, 1 << LayerMask.NameToLayer("Obstacle")).collider == null ? true : false;
+
+            if ((Vector2.Distance(thisNode.transform.position, allNodes[minIndex].transform.position) > Vector2.Distance(thisNode.transform.position, allNodes[i].transform.position) && isBlinded) || first)
             {
                 isNodeChanged = true;
                 allNodes[minIndex].connections.Remove(thisNode);
