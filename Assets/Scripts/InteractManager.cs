@@ -19,6 +19,7 @@ public class InteractManager : MonoBehaviour
     public TextMeshProUGUI talkingTitle;
     public bool showPanel = false;
     public int page = 0;
+    public bool showMap = false;
 
     public AudioClip doorOpenSFX;
     public AudioClip doorLockSFX;
@@ -47,6 +48,7 @@ public class InteractManager : MonoBehaviour
     }
 
     public Image fadeImg;
+    public Image mapImg;
 
     private void Start()
     {
@@ -56,6 +58,7 @@ public class InteractManager : MonoBehaviour
         objectIdScript = FindObjectOfType<ObjectId>();
         talkTextManager = FindObjectOfType<TalkTextManager>();
         fadeImg = GameObject.Find("FadeImage").GetComponent<Image>();
+        mapImg = GameObject.Find("Map").GetComponent<Image>();
         audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
         gm = FindObjectOfType<GameManager>();
 
@@ -74,19 +77,14 @@ public class InteractManager : MonoBehaviour
         objectNumber = scanObject.GetComponent<ObjectId>().objectNumber;
         string[] text = talkTextManager.GetText(objectId * 100 + objectNumber);
 
-        talkingTitle.text = scanObject.GetComponent<ObjectId>().title;
-
         if (page == 0 || page >= text.Length)
             showPanel = !showPanel;
 
-        if (objectId == (int)InteractManager.objectList.document && page == 0)
-        {
-            audioSource.clip = documentSFX;
-            audioSource.Play();
-        }
-
         if (page < text.Length)
+        {
+            talkingTitle.text = scanObject.GetComponent<ObjectId>().title[page];
             talkingText.text = talkTextManager.GetText(objectId * 100 + objectNumber)[page++];
+        }
         else
             page = 0;
     }
@@ -202,16 +200,38 @@ public class InteractManager : MonoBehaviour
         switch (eventObject.GetComponent<ObjectId>().objectNumber)
         {
             case 0:
-                StartCoroutine("Event1", eventObject);
-                flashlight.SetActive(true);
-                flashlight.GetComponent<Flashlight>().CalcDirection(player.lastDirection.x, player.lastDirection.y);
-                Destroy(eventObject);
+                if (!flashlight.activeSelf)
+                {
+                    flashlight.SetActive(true);
+                    flashlight.GetComponent<Flashlight>().CalcDirection(player.lastDirection.x, player.lastDirection.y);
+                }
+                Talking(eventObject);
+                if (page == 0)
+                    Destroy(eventObject);
                 break;
             case 1:
+                if (!mapImg.gameObject.activeSelf)
+                {
+                    player.hasMap = true;
+                }
+                Talking(eventObject);
+                if (page == 0)
+                    Destroy(eventObject);
                 break;
             case 2:
                 break;
         }
+    }
+
+    public void OpenMap()
+    {
+        if (player.hasMap)
+            showMap = !showMap;
+
+        if (showMap)
+            mapImg.gameObject.SetActive(true);
+        else
+            mapImg.gameObject.SetActive(false);
     }
 
     IEnumerator ChangeRoom(Vector2 location)
@@ -270,12 +290,5 @@ public class InteractManager : MonoBehaviour
         yield return new WaitForSeconds(4);
 
         SceneManager.LoadScene(sceneName);
-    }
-
-    // 손전등과 지도를 얻는 이벤트
-    IEnumerator Event1(GameObject eventObject)
-    {
-        // 구현하기
-        yield return null;
     }
 }   

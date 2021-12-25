@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject globalLight;
     public Enemy enemy;
     public Player player;
+    public InteractManager inter;
 
     public GameObject pausePanel;
     public bool isPause = false;
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     public static bool isLoadedGame;
 
     float canRestartTimer = 0;
+    bool flag = true;
 
     private void Awake()
     {
@@ -37,6 +39,9 @@ public class GameManager : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();
         player = FindObjectOfType<Player>();
         gameOverPanel = GameObject.Find("GameOver").GetComponent<Image>();
+        inter = FindObjectOfType<InteractManager>();
+
+        InitProperties();
     }
 
     private void Update()
@@ -67,6 +72,12 @@ public class GameManager : MonoBehaviour
         }
         else
             gameOverPanel.gameObject.SetActive(false);
+    }
+
+    public void InitProperties()
+    {
+        pausePanel.SetActive(false);
+        inter.mapImg.gameObject.SetActive(false);
     }
 
     public void GameOver()
@@ -107,6 +118,7 @@ public class GameManager : MonoBehaviour
         player.isGameStarted = data.isGameStarted;
         player.isGameCleared = data.isGameCleared;
         player.floor = data.floor;
+        player.hasMap = data.hasMap;
 
         Vector2 position;
         position.x = data.playerPosition[0];
