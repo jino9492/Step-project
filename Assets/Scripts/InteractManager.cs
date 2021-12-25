@@ -21,6 +21,9 @@ public class InteractManager : MonoBehaviour
     public AudioClip doorOpenSFX;
     public AudioClip doorLockSFX;
     public AudioSource audioSource;
+    AudioListener audioListener;
+    AudioListener audioListenerPlayer;
+    AudioLowPassFilter audioFilterEnemy;
 
     public int objectId;
     public int objectNumber;
@@ -74,30 +77,31 @@ public class InteractManager : MonoBehaviour
 
     public void OpenDoor(GameObject scanObject)
     {
-        Vector2 location = scanObject.GetComponent<ObjectId>().location;
-        AudioListener audioListener = scanObject.GetComponent<AudioListener>();
-        AudioListener audioListenerPlayer = player.GetComponent<AudioListener>();
-        AudioLowPassFilter audioFilterEnemy = enemy.GetComponent<AudioLowPassFilter>();
-
         if (!enemy.isPlayerFounded)
         {
             player.inRoom = !player.inRoom;
-            Debug.Log(scanObject);
-            if (player.inRoom)
-            {
-                audioFilterEnemy.enabled = true;
-                audioListener.enabled = true;
-                audioListenerPlayer.enabled = false;
-            }
-            else
-            {
-                audioFilterEnemy.enabled = false;
-                audioListener.enabled = false;
-                audioListenerPlayer.enabled = true;
-            }
-
-            StartCoroutine("ChangeRoom", location);
         }
+
+        if (player.inRoom)
+        {
+            audioFilterEnemy.enabled = true;
+            audioListener.enabled = true;
+            audioListenerPlayer.enabled = false;
+        }
+
+        Vector2 location = scanObject.GetComponent<ObjectId>().location;
+        audioListener = scanObject.GetComponent<AudioListener>();
+        audioListenerPlayer = player.GetComponent<AudioListener>();
+        audioFilterEnemy = enemy.GetComponent<AudioLowPassFilter>();
+
+        if (!player.inRoom)
+        {
+            audioFilterEnemy.enabled = false;
+            audioListener.enabled = false;
+            audioListenerPlayer.enabled = true;
+        }
+
+        StartCoroutine("ChangeRoom", location);
     }
 
     public void LockedDoor()
