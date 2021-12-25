@@ -675,6 +675,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9040127224358777589, guid: c917943d4a9759f4583d01a4918022e0,
         type: 3}
+      propertyPath: inRoom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040127224358777589, guid: c917943d4a9759f4583d01a4918022e0,
+        type: 3}
       propertyPath: onTutorial
       value: 0
       objectReference: {fileID: 0}
@@ -682,6 +687,21 @@ PrefabInstance:
         type: 3}
       propertyPath: isGameStarted
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040127224358777589, guid: c917943d4a9759f4583d01a4918022e0,
+        type: 3}
+      propertyPath: key.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040127224358777589, guid: c917943d4a9759f4583d01a4918022e0,
+        type: 3}
+      propertyPath: key.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040127224358777589, guid: c917943d4a9759f4583d01a4918022e0,
+        type: 3}
+      propertyPath: key.Array.data[2]
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c917943d4a9759f4583d01a4918022e0, type: 3}
@@ -2650,6 +2670,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.000030517578
+      objectReference: {fileID: 0}
+    - target: {fileID: 1286016894336829788, guid: 2b50144835203aa409b59c9cd222d86d,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1286016894570867641, guid: 2b50144835203aa409b59c9cd222d86d,
         type: 3}

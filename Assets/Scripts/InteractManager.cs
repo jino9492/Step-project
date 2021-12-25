@@ -49,6 +49,9 @@ public class InteractManager : MonoBehaviour
         talkTextManager = FindObjectOfType<TalkTextManager>();
         fadeImg = GameObject.Find("FadeImage").GetComponent<Image>();
         audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+
+        audioListenerPlayer = player.GetComponent<AudioListener>();
+        audioFilterEnemy = enemy.GetComponent<AudioLowPassFilter>();
     }
 
     private void Update()
@@ -77,31 +80,35 @@ public class InteractManager : MonoBehaviour
 
     public void OpenDoor(GameObject scanObject)
     {
-        if (!enemy.isPlayerFounded)
-        {
-            player.inRoom = !player.inRoom;
-        }
-
-        if (player.inRoom)
-        {
-            audioFilterEnemy.enabled = true;
-            audioListener.enabled = true;
-            audioListenerPlayer.enabled = false;
-        }
-
         Vector2 location = scanObject.GetComponent<ObjectId>().location;
-        audioListener = scanObject.GetComponent<AudioListener>();
-        audioListenerPlayer = player.GetComponent<AudioListener>();
-        audioFilterEnemy = enemy.GetComponent<AudioLowPassFilter>();
 
         if (!player.inRoom)
         {
-            audioFilterEnemy.enabled = false;
-            audioListener.enabled = false;
-            audioListenerPlayer.enabled = true;
+            audioListener = scanObject.GetComponent<AudioListener>();
         }
 
-        StartCoroutine("ChangeRoom", location);
+        if (!enemy.isPlayerFounded)
+        {
+            player.inRoom = !player.inRoom;
+            Debug.Log(scanObject);
+
+            if (audioListener != null) {
+                if (player.inRoom)
+                {
+                    audioFilterEnemy.enabled = true;
+                    audioListener.enabled = true;
+                    audioListenerPlayer.enabled = false;
+                }
+                else
+                {
+                    audioFilterEnemy.enabled = false;
+                    audioListener.enabled = false;
+                    audioListenerPlayer.enabled = true;
+                }
+            }
+
+            StartCoroutine("ChangeRoom", location);
+        }
     }
 
     public void LockedDoor()
