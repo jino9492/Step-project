@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     public bool[] key;
     public bool isGameStarted; // 괴물 활동 시작 시기 (철창 너머로 괴물 처음 봤을 때 기준)
     public bool isGameCleared;
+    public bool hasMap;
     #endregion
 
     [Header("Path Finding")]
@@ -79,6 +80,12 @@ public class Player : MonoBehaviour
         }
         else
             tutorial.gameObject.SetActive(false);
+
+        // 지도 열기
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            interactManager.OpenMap();
+        }
 
         //대화창있을때 움직 ㄴㄴ
         if (!interactManager.showPanel)

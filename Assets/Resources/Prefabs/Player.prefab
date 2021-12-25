@@ -260,11 +260,12 @@ MonoBehaviour:
     m_Bits: 256
   isDead: 0
   floor: 60
-  onTutorial: 1
+  onTutorial: 0
   inRoom: 1
   key: 000000
   isGameStarted: 0
   isGameCleared: 0
+  hasMap: 0
   gc: {fileID: 0}
   nodes:
     thisNode: {fileID: 9040127223922824777}

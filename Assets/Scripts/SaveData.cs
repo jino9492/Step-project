@@ -12,6 +12,7 @@ public class SaveData
     public bool onTutorial;
     public bool isGameStarted;
     public bool isGameCleared;
+    public bool hasMap;
 
     public SaveData(Player player)
     {
@@ -19,6 +20,7 @@ public class SaveData
         floor = player.floor;
         key = player.key;
         inRoom = player.inRoom;
+        hasMap = player.hasMap;
         isGameStarted = player.isGameStarted;
         isGameCleared = player.isGameCleared;
         playerPosition = new float[2];
