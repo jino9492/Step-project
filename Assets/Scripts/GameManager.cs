@@ -22,11 +22,11 @@ public class GameManager : MonoBehaviour
     public static bool isLoadedGame;
 
     float canRestartTimer = 0;
-    bool flag = true;
 
     private void Start()
     {
         player = FindObjectOfType<Player>();
+
         if (isLoadedGame)
         {
             LoadGame();

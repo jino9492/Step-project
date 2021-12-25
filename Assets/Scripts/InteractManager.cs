@@ -216,7 +216,7 @@ public class InteractManager : MonoBehaviour
                         flashlight.SetActive(true);
                         flashlight.GetComponent<Flashlight>().CalcDirection(player.lastDirection.x, player.lastDirection.y);
                     }
-
+                    SaveSystem.Save(player);
                     Destroy(eventObject);
                 }
                 break;

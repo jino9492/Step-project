@@ -31,6 +31,9 @@ public class Title : MonoBehaviour
 
     public void NewGame()
     {
+        string path = Application.persistentDataPath + "/SaveData.savedata";
+        if (File.Exists(path))
+            File.Delete(path);
         SceneManager.LoadScene(SceneToLoad);
     }
 
