@@ -670,7 +670,7 @@ PrefabInstance:
     - target: {fileID: 9040127224358777589, guid: c917943d4a9759f4583d01a4918022e0,
         type: 3}
       propertyPath: onTutorial
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9040127224358777589, guid: c917943d4a9759f4583d01a4918022e0,
         type: 3}
@@ -5884,12 +5884,13 @@ MonoBehaviour:
   objectNumber: 98
   location: {x: 0, y: 0}
   title:
-  - 
-  - 
-  - 
+  - "\uB098"
+  - "\uB098"
+  - "[ \uC870\uC791\uBC95 ]"
   text:
-  - "\u3142\u3137\u3148\u3131"
-  - "\u3142"
+  - "\uC55E\uC774 \uC5B4\uB450\uC6CC.."
+  - "\uC77C\uB2E8 \uAE09\uD558\uAC8C\uB77C\uB3C4 \uC8FC\uBCC0\uC744 \uC0B4\uD3B4\uBCF4\uC790."
+  - "\uBC29\uD5A5\uD0A4\uB85C \uC774\uB3D9, Z\uB85C \uC0C1\uD638\uC791\uC6A9"
   sceneName: 
   isAdjacentToHallway: 0
 --- !u!1001 &862904139
@@ -111775,12 +111776,10 @@ MonoBehaviour:
   title:
   - "\uB098"
   - "\uB098"
-  - 
   text:
   - "\uC5EC\uAE34.. \uC5B4\uB514\uC9C0? \uAE30\uC5B5\uC774 \uD558\uB098\uB3C4 \uB098\uC9C8
     \uC54A\uC544.. "
   - "\uB098\uB294 \uC65C \uC5EC\uAE30\uC5D0 \uC788\uB294 \uAC70\uC9C0?"
-  - 
   sceneName: 
   isAdjacentToHallway: 0
 --- !u!1001 &1705603525
