@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     public Vector2 lastDirection;
     public LayerMask layerMask;
 
+    public bool isDead;
+
     [Header("Save Data")]
     #region SaveData
     public int floor = 60;
@@ -52,6 +54,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        // enemy가 처음부터 비활성화 되어있을 때
         if (enemy != null)
         {
             if (!isGameStarted)
@@ -64,6 +67,7 @@ public class Player : MonoBehaviour
             Debug.LogError("Enemy's state is false");
         }
 
+        // 튜토리얼 상태 체크
         if (onTutorial)
         {
             tutorial.gameObject.SetActive(true);
@@ -73,7 +77,8 @@ public class Player : MonoBehaviour
         else
             tutorial.gameObject.SetActive(false);
 
-        if (!interactManager.showPanel) //대화창있을때 움직 ㄴㄴ
+        //대화창있을때 움직 ㄴㄴ
+        if (!interactManager.showPanel)
         {
             moveInput.x = Input.GetAxisRaw("Horizontal");
             moveInput.y = Input.GetAxisRaw("Vertical");
@@ -84,6 +89,7 @@ public class Player : MonoBehaviour
             moveInput = Vector2.zero;
         }
 
+        // 애니메이션 및 사운드
         Vector2 direction = new Vector2(moveInput.x, moveInput.y);
         if (direction != Vector2.zero)
         {
@@ -164,6 +170,7 @@ public class Player : MonoBehaviour
         if (nodes.isNodeChanged)
             nodes.isNodeChanged = false;
 
+        // 방 안에 있을 때 간선 연결 해제
         if (!inRoom)
         {
             if (nodes.thisNode.connections.Count == 0)

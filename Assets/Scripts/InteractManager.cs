@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.UI;
 using TMPro;
+using UnityEngine.UI;
 
 public class InteractManager : MonoBehaviour
 {
@@ -35,7 +35,7 @@ public class InteractManager : MonoBehaviour
         eventObject = 10, // 10
     }
 
-    public SpriteRenderer fadeImg;
+    public Image fadeImg;
 
     private void Start()
     {
@@ -44,7 +44,7 @@ public class InteractManager : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();
         objectIdScript = FindObjectOfType<ObjectId>();
         talkTextManager = FindObjectOfType<TalkTextManager>();
-        fadeImg = GameObject.Find("FadeImage").GetComponent<SpriteRenderer>();
+        fadeImg = GameObject.Find("FadeImage").GetComponent<Image>();
         audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
     }
 
@@ -162,6 +162,7 @@ public class InteractManager : MonoBehaviour
 
     IEnumerator ChangeRoom(Vector2 location)
     {
+        fadeImg.gameObject.SetActive(true);
         if (enemy.gameObject.activeSelf)
             enemy.StartCoroutine("DelayPathFinding", enemy.nodes.thisNode.connections[0]);
         player.enabled = false;
@@ -189,6 +190,7 @@ public class InteractManager : MonoBehaviour
         fadeImg.color = new Color(0, 0, 0, 0);
 
         player.enabled = true;
+        fadeImg.gameObject.SetActive(false);
     }
 
     // 손전등과 지도를 얻는 이벤트

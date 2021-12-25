@@ -229,6 +229,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
+            player.isDead = true;
             gm.GameOver();
         }
     }
