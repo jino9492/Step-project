@@ -10,7 +10,7 @@ public class Title : MonoBehaviour
     public string SceneToLoad;
     public Button loadGameButton;
 
-    public FloorData floor = new FloorData();
+    public FloorData floor;
 
     void Start()
     {
@@ -25,6 +25,8 @@ public class Title : MonoBehaviour
             colors.highlightedColor = new Color32(100, 100, 100, 255);
             loadGameButton.colors = colors;
         }
+
+        floor = new FloorData();
     }
 
     public void NewGame()

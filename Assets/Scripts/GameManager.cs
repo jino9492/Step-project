@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
-
         if (isLoadedGame)
         {
             LoadGame();
@@ -119,6 +118,8 @@ public class GameManager : MonoBehaviour
         player.isGameCleared = data.isGameCleared;
         player.floor = data.floor;
         player.hasMap = data.hasMap;
+        player.interactManager.audioListenerPlayer.enabled = data.isActivePlayerAudioListener;
+        GameObject.Find(data.doorAudioListener).GetComponent<AudioListener>().enabled = !data.isActivePlayerAudioListener;
 
         Vector2 position;
         position.x = data.playerPosition[0];

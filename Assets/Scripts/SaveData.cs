@@ -13,6 +13,8 @@ public class SaveData
     public bool isGameStarted;
     public bool isGameCleared;
     public bool hasMap;
+    public bool isActivePlayerAudioListener;
+    public string doorAudioListener;
 
     public SaveData(Player player)
     {
@@ -23,6 +25,8 @@ public class SaveData
         hasMap = player.hasMap;
         isGameStarted = player.isGameStarted;
         isGameCleared = player.isGameCleared;
+        isActivePlayerAudioListener = player.interactManager.audioListenerPlayer.enabled;
+        doorAudioListener = player.interactManager.audioListener.gameObject.name;
         playerPosition = new float[2];
         playerPosition[0] = player.transform.position.x;
         playerPosition[1] = player.transform.position.y;

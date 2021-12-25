@@ -193,7 +193,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 1.0031943, y: 1.0031943, z: 0}
+  m_ChunkCullingBounds: {x: 1, y: 1, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -801,6 +801,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1456946986}
   - component: {fileID: 1456946985}
+  - component: {fileID: 1456946987}
   m_Layer: 0
   m_Name: TitleManager
   m_TagString: Untagged
@@ -822,6 +823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SceneToLoad: FirstFloor
   loadGameButton: {fileID: 0}
+  floor: {fileID: 1456946987}
 --- !u!4 &1456946986
 Transform:
   m_ObjectHideFlags: 0
@@ -836,6 +838,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1456946987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456946984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4f5fb1b32bc7248a23e6b7ae0539a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1500724439
 GameObject:
   m_ObjectHideFlags: 0

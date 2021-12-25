@@ -28,8 +28,8 @@ public class InteractManager : MonoBehaviour
     public AudioClip elevatorSFX;
     public AudioSource audioSource;
 
-    AudioListener audioListener;
-    AudioListener audioListenerPlayer;
+    public AudioListener audioListener;
+    public AudioListener audioListenerPlayer;
     AudioLowPassFilter audioFilterEnemy;
 
     public int objectId;
@@ -101,7 +101,6 @@ public class InteractManager : MonoBehaviour
         if (!enemy.isPlayerFounded)
         {
             player.inRoom = !player.inRoom;
-            Debug.Log(scanObject);
 
             if (audioListener != null) {
                 if (player.inRoom)
