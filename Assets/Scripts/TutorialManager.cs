@@ -24,8 +24,10 @@ public class TutorialManager : MonoBehaviour
    
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
             Tutorial();
+        }
     }
 
     public void Tutorial()
@@ -38,7 +40,8 @@ public class TutorialManager : MonoBehaviour
                 {
                     nextStep = true;
 
-                    GameObject.Find("Flashlight").SetActive(false);
+                    if (player.floor == 60)
+                        GameObject.Find("Flashlight").SetActive(false);
                     interact.fadeImg.color = new Color(0, 0, 0, 1);
                     StartCoroutine("FadeOut");
                 }

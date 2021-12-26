@@ -122,7 +122,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.45402527, y: -0.4916687}
+  m_Offset: {x: 0.21652985, y: 2.8332672}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -133,7 +133,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.9843445, y: 12.717529}
+  m_Size: {x: 5.50935, y: 3.8511047}
   m_EdgeRadius: 0
 --- !u!114 &6190852775838926090
 MonoBehaviour:
@@ -149,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkingSound: {fileID: 8300000, guid: b3a1adddc5c76c44088f5322ce15d680, type: 3}
   runningSound: {fileID: 8300000, guid: b0faa5364b847af43b974893807cf87b, type: 3}
+  screamingSound: {fileID: 8300000, guid: 936b9a8e1eb171044a906585f9d73c93, type: 3}
   player: {fileID: 0}
   enemyPrefab: {fileID: 6190852775838926086}
   gm: {fileID: 0}
@@ -205,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Graph: {fileID: 0}
-  m_Speed: 0.12
+  m_Speed: 0.18
   m_Current: {fileID: 3316340711774741498}
 --- !u!114 &3316340711774741498
 MonoBehaviour:

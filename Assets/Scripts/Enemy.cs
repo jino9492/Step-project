@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip walkingSound;
     public AudioClip runningSound;
+    public AudioClip screamingSound;
     #endregion
 
     float animTimer = 0;
@@ -102,14 +103,14 @@ public class Enemy : MonoBehaviour
                     randNode = nodes.allNodes[Random.Range(0, nodes.allNodes.Length - 1)];
                 } while (nodes.thisNode.connections.Contains(randNode));
 
-                if (Random.Range(0, 2) == 0)
+                if (Random.Range(0, 4) == 0)
                     StartCoroutine("DelayPathFinding", randNode);
                 else
                     RePathFinding(randNode);
             }
             else
             {
-                if (Random.Range(0, 2) == 0 || isRespawned)
+                if (Random.Range(0, 4) == 0 || isRespawned)
                     StartCoroutine("DelayPathFinding");
                 else
                     RePathFinding();
@@ -149,13 +150,12 @@ public class Enemy : MonoBehaviour
 
         transform.position = spawn;
 
+        audioSource.clip = walkingSound;
         ResetPathFinding();
 
         isRespawned = true;
         isPlayerFounded = false;
         flash.isEnemyDead = false;
-
-        audioSource.clip = walkingSound;
     }
 
     public void RePathFinding() // AI : 길 찾기
@@ -189,8 +189,8 @@ public class Enemy : MonoBehaviour
             isPlayerFounded = true;
 
             audioSource.Stop();
-            audioSource.clip = runningSound;
-            audioSource.Play();
+            audioSource.PlayOneShot(screamingSound, 0.5f);
+            audioSource.PlayOneShot(runningSound, 0.7f);
 
             if (isRespawned)
                 isRespawned = false;

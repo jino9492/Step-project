@@ -13,8 +13,12 @@ public class GameManager : MonoBehaviour
     public Player player;
     public InteractManager inter;
 
+    public AudioSource BGM;
+    public AudioClip bgmClip;
+
     public GameObject pausePanel;
     public bool isPause = false;
+    public bool init = false;
 
     public Image gameOverPanel;
 
@@ -26,6 +30,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
+        globalLight.SetActive(false);
+        enemy = FindObjectOfType<Enemy>();
+        gameOverPanel = GameObject.Find("GameOver").GetComponent<Image>();
+        inter = FindObjectOfType<InteractManager>();
+        floor = new FloorData();
+        BGM = FindObjectOfType<GameManager>().GetComponent<AudioSource>();
 
         if (isLoadedGame)
         {
@@ -33,23 +43,29 @@ public class GameManager : MonoBehaviour
             isLoadedGame = false;
         }
 
-        globalLight.SetActive(false);
-        enemy = FindObjectOfType<Enemy>();
-        gameOverPanel = GameObject.Find("GameOver").GetComponent<Image>();
-        inter = FindObjectOfType<InteractManager>();
-        floor = new FloorData();
-
         InitProperties();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) // E를 눌러 불 좀 켜줄래?
-            globalLight.SetActive(!globalLight.activeSelf);
+        if (!init) 
+        {
+            InitProperties();
+            init = true;
+        }
+        if (isPause)
+        {
+            enemy.gameObject.SetActive(false);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPause == false)
+            if (!isPause)
             {
                 pausePanel.gameObject.SetActive(true);
                 isPause = true;
@@ -57,8 +73,7 @@ public class GameManager : MonoBehaviour
 
             else
             {
-                pausePanel.gameObject.SetActive(false);
-                isPause = false;
+                ResumeButton();
             }
         }
 
@@ -80,13 +95,14 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        BGM.PlayOneShot(bgmClip, 0.05f);
+        gameObject.GetComponent<AudioListener>().enabled = true;
         StartCoroutine("CoGameOver");
-        Debug.Log("Game Over");
     }
 
     public void RestartGame()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             string path = Application.persistentDataPath + "/SaveData.savedata";
             if (File.Exists(path))
@@ -97,8 +113,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ResumeButton()
+    {
+        pausePanel.gameObject.SetActive(false);
+        isPause = false;
+        enemy.gameObject.SetActive(true);
+        enemy.RePathFinding();
+    }
+
     public void SaveButton()
     {
+        ResumeButton();
         SaveSystem.Save(player);
     }
 
@@ -132,6 +157,7 @@ public class GameManager : MonoBehaviour
     {
         enemy.gameObject.SetActive(false);
         player.gameObject.SetActive(false);
+        inter.enabled = false;
 
         gameOverPanel.gameObject.SetActive(true);
         foreach(TextMeshProUGUI text in gameOverPanel.GetComponentsInChildren<TextMeshProUGUI>())

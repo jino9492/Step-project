@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
         //상호작용 (space)
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, -10), direction * 5f, Color.green);
         RaycastHit2D interObject = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), lastDirection, 5f, layerMask);
-        if (Input.GetKeyDown(KeyCode.Space) && interObject.collider)
+        if (Input.GetKeyDown(KeyCode.Z) && interObject.collider)
         {
             ObjectId objectData = interObject.collider.gameObject.GetComponent<ObjectId>();
             if (!objectData)

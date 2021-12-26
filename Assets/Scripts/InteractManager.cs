@@ -50,10 +50,11 @@ public class InteractManager : MonoBehaviour
     public Image fadeImg;
     public Image mapImg;
 
-    private void Start()
+    private void Awake()
     {
-        flashlight = FindObjectOfType<Flashlight>().gameObject;
         player = FindObjectOfType<Player>();
+        audioListenerPlayer = player.GetComponent<AudioListener>();
+        flashlight = FindObjectOfType<Flashlight>().gameObject;
         enemy = FindObjectOfType<Enemy>();
         objectIdScript = FindObjectOfType<ObjectId>();
         talkTextManager = FindObjectOfType<TalkTextManager>();
@@ -61,8 +62,6 @@ public class InteractManager : MonoBehaviour
         mapImg = GameObject.Find("Map").GetComponent<Image>();
         audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
         gm = FindObjectOfType<GameManager>();
-
-        audioListenerPlayer = player.GetComponent<AudioListener>();
         audioFilterEnemy = enemy.GetComponent<AudioLowPassFilter>();
     }
 
@@ -321,7 +320,7 @@ public class InteractManager : MonoBehaviour
     {
         yield return new WaitUntil(() =>
         {
-            return Input.GetKeyDown(KeyCode.Space);
+            return Input.GetKeyDown(KeyCode.Z);
         });
 
         Event(eventObject);

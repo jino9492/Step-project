@@ -991,6 +991,8 @@ MonoBehaviour:
   leverSFX: {fileID: 8300000, guid: 8c2258cedecfaad4aa7ab88d3643bd78, type: 3}
   elevatorSFX: {fileID: 8300000, guid: b229507610c513d49bea73daa7750277, type: 3}
   audioSource: {fileID: 0}
+  audioListener: {fileID: 0}
+  audioListenerPlayer: {fileID: 0}
   objectId: 0
   objectNumber: 0
   fadeImg: {fileID: 0}
