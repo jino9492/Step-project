@@ -55,25 +55,33 @@ public class GameManager : MonoBehaviour
         }
         if (isPause)
         {
+            pausePanel.gameObject.SetActive(true);
             enemy.gameObject.SetActive(false);
             Time.timeScale = 0;
         }
         else
         {
+            pausePanel.gameObject.SetActive(false);
             Time.timeScale = 1;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !player.onTutorial)
         {
             if (!isPause)
             {
-                pausePanel.gameObject.SetActive(true);
                 isPause = true;
+                enemy.gameObject.SetActive(false);
             }
 
             else
             {
-                ResumeButton();
+                isPause = false;
+
+                if (player.isGameStarted)
+                {
+                    enemy.gameObject.SetActive(true);
+                    enemy.RePathFinding();
+                }
             }
         }
 
@@ -115,16 +123,14 @@ public class GameManager : MonoBehaviour
 
     public void ResumeButton()
     {
-        pausePanel.gameObject.SetActive(false);
         isPause = false;
-        enemy.gameObject.SetActive(true);
-        enemy.RePathFinding();
     }
 
     public void SaveButton()
     {
-        ResumeButton();
+        Player player = FindObjectOfType<Player>();
         SaveSystem.Save(player);
+        isPause = false;
     }
 
     public void ExitButton()

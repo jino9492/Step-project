@@ -6,6 +6,7 @@ public class TutorialManager : MonoBehaviour
 {
     public InteractManager interact;
     public Player player;
+    public Enemy enemy;
     public int tutorialStep;
 
     public GameObject step1;
@@ -17,6 +18,7 @@ public class TutorialManager : MonoBehaviour
     {
         interact = FindObjectOfType<InteractManager>();
         player = FindObjectOfType<Player>();
+        enemy = FindObjectOfType<Enemy>();
 
         tutorialStep = -1;
     }
@@ -55,6 +57,7 @@ public class TutorialManager : MonoBehaviour
             case 2:
                 player.enabled = true;
                 player.onTutorial = false;
+                enemy.gameObject.SetActive(true);
                 SaveSystem.Save(player);
                 break;
         }

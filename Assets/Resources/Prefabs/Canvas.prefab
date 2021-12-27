@@ -1942,7 +1942,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6424403217498743276, guid: b302c9be637602e4a83941685797abee,
+          type: 3}
         m_MethodName: SaveButton
         m_Mode: 1
         m_Arguments:

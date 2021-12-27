@@ -48,7 +48,6 @@ public class Player : MonoBehaviour
         gm = FindObjectOfType<GameManager>();
         audioSource = GetComponent<AudioSource>();
         key = new bool[key.Length];
-        Debug.Log(key[0]);
 
         GameObject[] nodeObj = GameObject.FindGameObjectsWithTag("Node");
         nodes.allNodes = new Node[nodeObj.Length];
@@ -83,8 +82,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (floor != 60)
-                enemy.gameObject.SetActive(true);
             tutorial.gameObject.SetActive(false);
         }
 
