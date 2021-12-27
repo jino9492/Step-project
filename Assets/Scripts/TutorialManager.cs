@@ -55,6 +55,7 @@ public class TutorialManager : MonoBehaviour
             case 2:
                 player.enabled = true;
                 player.onTutorial = false;
+                SaveSystem.Save(player);
                 break;
         }
     }

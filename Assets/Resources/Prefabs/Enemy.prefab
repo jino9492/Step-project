@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Graph: {fileID: 0}
-  m_Speed: 0.18
+  m_Speed: 0.16
   m_Current: {fileID: 3316340711774741498}
 --- !u!114 &3316340711774741498
 MonoBehaviour:
