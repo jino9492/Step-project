@@ -81,8 +81,9 @@ public class InteractManager : MonoBehaviour
 
         if (page < text.Length)
         {
+            StopCoroutine("DelayText");
             talkingTitle.text = scanObject.GetComponent<ObjectId>().title[page];
-            talkingText.text = talkTextManager.GetText(objectId * 100 + objectNumber)[page++];
+            StartCoroutine("DelayText", talkTextManager.GetText(objectId * 100 + objectNumber)[page++]);
         }
         else
             page = 0;
@@ -253,6 +254,16 @@ public class InteractManager : MonoBehaviour
             mapImg.gameObject.SetActive(true);
         else
             mapImg.gameObject.SetActive(false);
+    }
+
+    IEnumerator DelayText(string text)
+    {
+        float delaySec = 0.025f;
+        for (int i = 0; i < text.Length; i++)
+        {
+            talkingText.text = text.Substring(0, i + 1);
+            yield return new WaitForSeconds(delaySec);
+        }
     }
 
     IEnumerator ChangeRoom(Vector2 location)
