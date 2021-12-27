@@ -77,11 +77,14 @@ public class Player : MonoBehaviour
             tutorial.gameObject.SetActive(true);
             if (tutorial.tutorialStep == -1)
                 tutorial.Tutorial();
-            enemy.gameObject.SetActive(false);
+
+            if (floor != 60)
+                enemy.gameObject.SetActive(false);
         }
         else
         {
-            enemy.gameObject.SetActive(true);
+            if (floor != 60)
+                enemy.gameObject.SetActive(true);
             tutorial.gameObject.SetActive(false);
         }
 

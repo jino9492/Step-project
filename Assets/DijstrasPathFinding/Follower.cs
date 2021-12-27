@@ -75,7 +75,7 @@ public class Follower : MonoBehaviour
 		if ( m_Current != null )
 		{
 			if(gameObject.activeSelf)
-				transform.position = Vector3.MoveTowards ( transform.position, m_Current.transform.position, m_Speed );
+				transform.position = Vector3.MoveTowards ( transform.position, m_Current.transform.position, m_Speed * Time.fixedDeltaTime);
 		}
 	}
 	
